@@ -1,2 +1,2 @@
-# Agilit---Squadro
+# Agilité---Squadro
 Squadro
