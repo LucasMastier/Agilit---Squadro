@@ -45,6 +45,7 @@ header{
 }
 .piece{
     position: absolute;
+    cursor: pointer;
 }
 .piece.red{
     background: red;
