@@ -80,7 +80,9 @@ $(function()
                             case 5:
                             //$(this).animate({'left' : '75px'}, {duration : 400});
                             $(this).css({top:'auto'});   
-                            $(this).animate({bottom: verticalPositions[6]+'px'}, 400);
+                            $(this).animate({bottom: verticalPositions[6]+'px'}, 400, function() {
+                              $($pr1).css("backgroundPosition","-33px -206px")
+                            });
                             pr1Position +=1;
                             break;
 
@@ -129,7 +131,9 @@ $(function()
                             case 3:
                             //$(this).animate({'left' : '75px'}, {duration : 400});
                             $(this).css({top:'auto'});   
-                            $(this).animate({bottom:verticalPositions[6]+'px'}, 400);
+                            $(this).animate({bottom:verticalPositions[6]+'px'}, 400,function(){
+                              $($pr2).css("backgroundPosition","-33px -206px")
+                            });
                             pr2Position +=3;
                             break;
 
@@ -210,7 +214,9 @@ $(function()
                             case 4:
                             //$(this).animate({'left' : '75px'}, {duration : 400});
                             $(this).css({top:'auto'});   
-                            $(this).animate({bottom: verticalPositions[6]+'px'}, 400);
+                            $(this).animate({bottom: verticalPositions[6]+'px'}, 400, function(){
+                              $($pr3).css("backgroundPosition","-33px -206px")
+                            });
                             pr3Position +=2;
                             break;
 
@@ -265,7 +271,9 @@ $(function()
                             case 3:
                             //$(this).animate({'left' : '75px'}, {duration : 400});
                             $(this).css({top:'auto'});   
-                            $(this).animate({bottom:verticalPositions[6]+'px'}, 400);
+                            $(this).animate({bottom:verticalPositions[6]+'px'}, 400, function(){
+                              $($pr4).css("backgroundPosition","-33px -206px");
+                            });
                             pr4Position +=3;
                             break;
 
@@ -369,7 +377,9 @@ $(function()
                             case 5:
                             //$(this).animate({'left' : '75px'}, {duration : 400});
                             $(this).css({top:'auto'});   
-                            $(this).animate({bottom: verticalPositions[6]+'px'}, 400);
+                            $(this).animate({bottom: verticalPositions[6]+'px'}, 400, function(){
+                              $($pr5).css("backgroundPosition","-33px -206px")
+                            });
                             pr5Position +=1;
                             break;
 
@@ -421,7 +431,9 @@ $(function()
                             case 3:
                             
                             
-                            $(this).animate({'left' : horizontalPositions[6]}, {duration : 400});
+                            $(this).animate({'left' : horizontalPositions[6]}, 400, function(){
+                              $($pj1).css("background-position","112px 280px")
+                            });
                             pj1Position +=3;
                             break;
 
@@ -525,7 +537,9 @@ $(function()
                             case 5:
                             
                               
-                            $(this).animate({'left' : horizontalPositions[6]}, {duration : 400});
+                            $(this).animate({'left' : horizontalPositions[6]}, 400, function(){
+                              $($pj2).css("background-position","112px 280px")
+                            });
                             pj2Position +=1;
                             break;
 
@@ -581,7 +595,9 @@ $(function()
                             case 4:
                             
                             
-                            $(this).animate({'left' : horizontalPositions[6]}, {duration : 400});
+                            $(this).animate({'left' : horizontalPositions[6]}, 400, function(){
+                              $($pj3).css("background-position","112px 280px")
+                            });
                             pj3Position +=2;
                             break;
 
@@ -598,7 +614,9 @@ $(function()
                             case 8:
                             
                             
-                            $(this).animate({'left' : horizontalPositions[2]}, {duration : 400});
+                            $(this).animate({'left' : horizontalPositions[2]}, 400, function(){
+                              $($pj3).css("background-position","112px 280px")
+                            });
                             pj3Position +=2;
                             break;
 
@@ -667,7 +685,9 @@ $(function()
                             case 5:
                             
                               
-                            $(this).animate({'left' : horizontalPositions[6]}, {duration : 400});
+                            $(this).animate({'left' : horizontalPositions[6]}, 400, function(){
+                              $($pj4).css("background-position","112px 280px")
+                            });
                             pj4Position +=1;
                             break;
 
@@ -714,7 +734,9 @@ $(function()
                             case 3:
                             
                             
-                            $(this).animate({'left' : horizontalPositions[6]}, {duration : 400});
+                            $(this).animate({'left' : horizontalPositions[6]}, 400, function(){
+                              $($pj5).css("background-position","112px 280px")
+                            });
                             pj5Position +=3;
                             break;
 
