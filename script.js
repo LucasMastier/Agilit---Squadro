@@ -36,9 +36,11 @@ class Pieces{
         this.Wayback=true;
         if(this.pt_mvt==1){
             this.pt_mvt=3;
+            return;
         }
         if(this.pt_mvt==3){
             this.pt_mvt=1;
+            return;
         }
     }
     getPt_mvt(){
@@ -113,12 +115,14 @@ function movePieces(p){
 
 // Deroulement du jeu (main)
 function game(){
+    // Red turn
     movePieces(red1);
     movePieces(red2);
     movePieces(red3);
     movePieces(red4);
     movePieces(red5);
 
+    // Yellow  turn
     movePieces(yellow1);
     movePieces(yellow2);
     movePieces(yellow3);
