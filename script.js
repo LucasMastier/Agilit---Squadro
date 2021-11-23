@@ -167,10 +167,12 @@ function animatePieces(p){
         $(p.getElement()).css({left:'auto'});
     }
     if(p.getPos()==0 && p.isOnWayback()){
-        setTimeout(function(){p.getElement().style.opacity = "0.3";},400);
+        $(p.getElement()).fadeOut("slow");
     }
 }
+function retreatPieces(p){
 
+}
 function movePieces(p){
     /*  permet le mouvement des pieces */
     let pm=p.getPt_mvt();
