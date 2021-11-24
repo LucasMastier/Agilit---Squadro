@@ -21,6 +21,17 @@ var redScore=[];
 var yellowScore=[];
 var turnCounter=-1;
 
+var tab_board=[
+    [0,1,1,1,1,1,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0],
+
+];
+
 // Class
 class Pieces{ 
     constructor(num,pos,color,pt_mvt){
@@ -98,6 +109,11 @@ function Redturn(t){
     */
     let turn=`C'est au tour des rouges !`;
     elementShown("entete",turn);
+    yellow1.getElement().style.pointerEvents= "none";
+    yellow2.getElement().style.pointerEvents= "none";
+    yellow3.getElement().style.pointerEvents= "none";
+    yellow4.getElement().style.pointerEvents= "none";
+    yellow5.getElement().style.pointerEvents= "none";
 
 }
 
@@ -107,12 +123,27 @@ function Yellowturn(t){
     */
     let turn=`C'est au tour des jaunes !`;
     elementShown("entete",turn);
+    red1.getElement().style.pointerEvents= "none";
+    red2.getElement().style.pointerEvents= "none";
+    red3.getElement().style.pointerEvents= "none";
+    red4.getElement().style.pointerEvents= "none";
+    red5.getElement().style.pointerEvents= "none";
 }
 
 function gameOver(){
     /*  Indique la fin de partie */
     elementShown("entete",'Partie terminée !');
-
+    red1.getElement().style.pointerEvents= "none";
+    red2.getElement().style.pointerEvents= "none";
+    red3.getElement().style.pointerEvents= "none";
+    red4.getElement().style.pointerEvents= "none";
+    red5.getElement().style.pointerEvents= "none";
+    
+    yellow1.getElement().style.pointerEvents= "none";
+    yellow2.getElement().style.pointerEvents= "none";
+    yellow3.getElement().style.pointerEvents= "none";
+    yellow4.getElement().style.pointerEvents= "none";
+    yellow5.getElement().style.pointerEvents= "none";
 }
 
 function scoreUpdate(p){
@@ -178,9 +209,20 @@ function movePieces(p){
         while(pm>0){
             if(p.getPos()==5 && pm>0 && !p.isOnWayback()){
                 returnPieces(p);
+                if(p.getColor()=="red"){
+                    tab_board[p.getPos()-1][p.getNum()]=0;
+                    tab_board[p.getPos()][p.getNum()]=1;
+                }
+                if(p.getColor()=="yellow"){
+                    tab_board[p.getNum()][p.getPos()-1]=0;
+                    tab_board[p.getNum()][p.getPos()]=1;
+                }
                 break;
             }
             if(p.getPos()>=0 && pm>0){
+                if(checkCollision(p)){
+                    pm=2;
+                }
                 if(p.isOnWayback()){
                     if(p.getPos()==0){
                         break;
@@ -190,6 +232,7 @@ function movePieces(p){
                     p.setPos(p.getPos()+1);
                 }
                 pm--;
+                updateTabBoard(p,true); // ajout pour collision
             }
         }
         animatePieces(p);
@@ -282,11 +325,131 @@ function initializeBoard(){
     game();
 }
 
+/* ==== Collision test ==== */
+function initTabBoard(){
+    /* Initialise le tableau a 2dimension qui represente le tableau 
+    */
+    for(let i=0;i<7;i++){
+        for(let j=0;j<7;j++){
+            tab_board[i][j]=0;
+            if(i==0 && (j>=1 && j<=5))
+                tab_board[i][j]=1;
+            if(j==0 && (i>=1 && i<=5))
+                tab_board[i][j]=1;
+        }
+    }
+}
+
+function checkCollision(p){
+    /*  check a chaque pas de la pieces s'il y a une collision a la case suivante
+        si c'est le cas il renvoie true et renvoie la piece a sa case initial ou checkpoint
+        sinon on renvoie false 
+    */
+    if(p.getColor()=="red"){
+        if(!p.isOnWayback() && tab_board[p.getPos()+1][p.getNum()]==1){
+            if(p.getPos()+1==1) returnCheckpoint(yellow1);
+            if(p.getPos()+1==2) returnCheckpoint(yellow2);
+            if(p.getPos()+1==3) returnCheckpoint(yellow3);
+            if(p.getPos()+1==4) returnCheckpoint(yellow4);
+            if(p.getPos()+1==5) returnCheckpoint(yellow5);
+            return true;
+        }
+        if(p.isOnWayback() && tab_board[p.getPos()-1][p.getNum()]==1){
+            if(p.getPos()-1==1) returnCheckpoint(yellow1);
+            if(p.getPos()-1==2) returnCheckpoint(yellow2);
+            if(p.getPos()-1==3) returnCheckpoint(yellow3);
+            if(p.getPos()-1==4) returnCheckpoint(yellow4);
+            if(p.getPos()-1==5) returnCheckpoint(yellow5);
+            return true;
+        }
+    }
+    if(p.getColor()=="yellow"){
+        if(!p.isOnWayback() && tab_board[p.getNum()][p.getPos()+1]==1){
+            if(p.getPos()+1==1) returnCheckpoint(red1);
+            if(p.getPos()+1==2) returnCheckpoint(red2);
+            if(p.getPos()+1==3) returnCheckpoint(red3);
+            if(p.getPos()+1==4) returnCheckpoint(red4);
+            if(p.getPos()+1==5) returnCheckpoint(red5);
+            return true;
+        }
+        if(p.isOnWayback() && tab_board[p.getNum()][p.getPos()-1]==1){
+            if(p.getPos()-1==1) returnCheckpoint(red1);
+            if(p.getPos()-1==2) returnCheckpoint(red2);
+            if(p.getPos()-1==3) returnCheckpoint(red3);
+            if(p.getPos()-1==4) returnCheckpoint(red4);
+            if(p.getPos()-1==5) returnCheckpoint(red5);
+            return true;
+        }
+    }
+    return false;
+}
+
+function returnCheckpoint(p){
+    /*  remet la piece a son point de checkpoint suite a une collision
+        et met a jour le tableau representant le plateau
+    */
+    updateTabBoard(p,false);
+    if(p.isOnWayback()){
+        p.setPos(6);
+    }else{
+        p.setPos(0);
+    }
+    animatePieces(p);
+}
+
+function updateTabBoard(p, b){
+    /*  met a jour le tableau a 2 dimensions du plateau 
+        le boolean b permet de savoir si c'est un update suite a une collision
+        ou a un simple mouvement sans collision
+    */
+    if(!b){
+        if(p.getColor()=="red" && p.isOnWayback()){
+            tab_board[p.getPos()][p.getNum()]=0;
+            tab_board[6][p.getNum()]=1
+        }
+        if(p.getColor()=="red" && !p.isOnWayback()){
+            tab_board[p.getPos()][p.getNum()]=0;
+            tab_board[0][p.getNum()]=1;
+
+        }
+        if(p.getColor()=="yellow" && p.isOnWayback()){
+            tab_board[p.getNum()][p.getPos()]=0;
+            tab_board[p.getNum()][6]=1;
+        }
+        if(p.getColor()=="yellow" && !p.isOnWayback()){
+            tab_board[p.getNum()][p.getPos()]=0;
+            tab_board[p.getNum()][0]=1;
+        }
+    }
+    if(b){
+        if(p.getColor()=="red" && p.isOnWayback()){
+            tab_board[p.getPos()+1][p.getNum()]=0;
+            tab_board[p.getPos()][p.getNum()]=1;
+        }
+        if(p.getColor()=="red" && !p.isOnWayback()){
+            tab_board[p.getPos()-1][p.getNum()]=0;
+            tab_board[p.getPos()][p.getNum()]=1;
+        }
+        if(p.getColor()=="yellow" && p.isOnWayback()){
+            tab_board[p.getNum()][p.getPos()+1]=0;
+            tab_board[p.getNum()][p.getPos()]=1;
+        }
+        if(p.getColor()=="yellow" && !p.isOnWayback()){
+            tab_board[p.getNum()][p.getPos()-1]=0;
+            tab_board[p.getNum()][p.getPos()]=1;
+        }
+    }
+}
+
+/* ==== Collision test ==== */
+
 // Deroulement du jeu (main)
 function game(){
     if(turnCounter==-1){
         initializeBoard();
+        initTabBoard();
     }
+    console.table(tab_board);
     if(turnCounter%2==0){
         Redturn();
         redPlay();
