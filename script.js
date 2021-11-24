@@ -158,7 +158,7 @@ function scoreUpdate(p){
         })
         if(bool){
             redScore.push(p);
-            document.getElementById('red'+redScore.length).style.backgroundColor = 'red';
+            elementShown("red",redScore.length + "/4");
         }
     }
     if(p.getColor()=="yellow" && p.isOnWayback() && p.getPos()==0){
@@ -168,7 +168,7 @@ function scoreUpdate(p){
         })
         if(bool)
             yellowScore.push(p);
-            document.getElementById('yellow'+redScore.length).style.backgroundColor = 'yellow';
+            elementShown("yellow",yellowScore.length + "/4");
     }
 }
 
