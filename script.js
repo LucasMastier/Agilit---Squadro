@@ -451,7 +451,6 @@ function game(){
         initializeBoard();
         initTabBoard();
     }
-    console.table(tab_board);
     if(turnCounter%2==0){
         Redturn();
         redPlay();
