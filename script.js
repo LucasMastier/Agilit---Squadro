@@ -233,7 +233,7 @@ function movePieces(p){
                     p.setPos(p.getPos()+1);
                 }
                 pm--;
-                updateTabBoard(p,true); // ajout pour collision
+                updateTabBoard(p,true);
             }
         }
         animatePieces(p);
