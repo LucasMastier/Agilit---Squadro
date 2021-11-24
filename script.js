@@ -158,7 +158,7 @@ function scoreUpdate(p){
         })
         if(bool){
             redScore.push(p);
-            elementShown("red",redScore.length + "/4");
+            document.getElementById('red'+redScore.length).style.backgroundColor = '#ff4d4d';
         }
     }
     if(p.getColor()=="yellow" && p.isOnWayback() && p.getPos()==0){
@@ -168,7 +168,7 @@ function scoreUpdate(p){
         })
         if(bool)
             yellowScore.push(p);
-            elementShown("yellow",yellowScore.length + "/4");
+            document.getElementById('yellow'+yellowScore.length).style.backgroundColor = '#fbc531';
     }
 }
 
@@ -198,12 +198,11 @@ function animatePieces(p){
         $(p.getElement()).css({left:'auto'});
     }
     if(p.getPos()==0 && p.isOnWayback()){
+        //setTimeout(function(){p.getElement().style.opacity = "0.3";},400);
         $(p.getElement()).fadeOut("slow");
     }
 }
-function retreatPieces(p){
 
-}
 function movePieces(p){
     /*  permet le mouvement des pieces */
     let pm=p.getPt_mvt();
@@ -451,6 +450,7 @@ function game(){
         initializeBoard();
         initTabBoard();
     }
+    console.table(tab_board);
     if(turnCounter%2==0){
         Redturn();
         redPlay();
