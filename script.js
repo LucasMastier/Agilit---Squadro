@@ -133,6 +133,8 @@ function Yellowturn(t){
 function gameOver(){
     /*  Indique la fin de partie */
     elementShown("entete",'Partie terminée !');
+
+    $(document.getElementsByClassName("boardfin")).fadeIn(2000);
     red1.getElement().style.pointerEvents= "none";
     red2.getElement().style.pointerEvents= "none";
     red3.getElement().style.pointerEvents= "none";
@@ -144,6 +146,8 @@ function gameOver(){
     yellow3.getElement().style.pointerEvents= "none";
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
+
+
 }
 
 function scoreUpdate(p){
@@ -467,3 +471,4 @@ function game(){
 }
 
 game();
+
