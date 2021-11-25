@@ -59,10 +59,18 @@
                 </button>
             </div>
         </div>
-        <audio controls>
+        <audio id='playeraudio' loop>
             <source src="audio/musicmenu.mp3" type="audio/mp3" />
             Votre navigateur ne prend pas en charge cet élement audio.
         </audio>
+        <div id="audio"> 
+            <button id='playbutton' onclick="document.getElementById('playeraudio').play()"></button> 
+            <button id='pausebutton' onclick="document.getElementById('playeraudio').pause()"></button>
+            <button id='mutebutton' onclick="document.getElementById('playeraudio').volume= 0"></button> 
+            <button onclick="document.getElementById('playeraudio').volume -= 0.004">Vol -</button> 
+            <button onclick="document.getElementById('playeraudio').volume += 0.004">Vol +</button> 
+            <script>document.getElementById('playeraudio').volume=0.005</script>
+        </div>
 
     </div>
     <script src="script.js" defer></script>

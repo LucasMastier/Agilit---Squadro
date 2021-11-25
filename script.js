@@ -96,6 +96,8 @@ let yellow3=new Pieces(3,0,'yellow',2);
 let yellow4=new Pieces(4,0,'yellow',1);
 let yellow5=new Pieces(5,0,'yellow',3);
 
+// Audio animation (a faire)
+
 
 // Fonction 
 function elementShown(id, text){

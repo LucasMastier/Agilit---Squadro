@@ -195,3 +195,50 @@ header{
     width: 80%;
     box-shadow: 1px 1px 12px #fbc531;
 }
+
+    /* Style audio */
+#audio{
+    align-items: center;
+    width: 10%;
+}
+#playbutton{
+    padding: 0;
+    border: 0;
+    background: inherit;
+    cursor: pointer;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    margin: 20px 2.5% 20px 2.5%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(../audio/play.png);
+}
+
+#pausebutton{
+    padding: 0;
+    border: 0;
+    background: inherit;
+    cursor: pointer;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    margin: 20px 2.5% 20px 2.5%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(../audio/pause.png);
+}
+
+#mutebutton{
+    padding: 0;
+    border: 0;
+    background: inherit;
+    cursor: pointer;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    margin: 20px 2.5% 20px 2.5%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(../audio/mute.png);
+}
