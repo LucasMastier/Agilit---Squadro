@@ -18,6 +18,7 @@ background position :
 // Variable globale
 var valuePositions=[0,75,192,309,426,543,620];
 var redScore=[];
+var vainqueur="";
 var yellowScore=[];
 var turnCounter=-1;
 
@@ -132,7 +133,7 @@ function Yellowturn(t){
 
 function gameOver(){
     /*  Indique la fin de partie */
-    elementShown("entete",'Partie terminée !');
+    elementShown("entete",'Partie terminée ! Victoire des '+vainqueur);
 
     $(document.getElementsByClassName("boardfin")).fadeIn(2000);
     red1.getElement().style.pointerEvents= "none";
@@ -465,6 +466,8 @@ function game(){
     }
 
     if(redScore.length==4 || yellowScore.length==4){
+        if(redScore.length==4){vainqueur="ROUGES";}
+        else{vainqueur="JAUNES";}
         gameOver();
         turnCounter=-1;
     }
