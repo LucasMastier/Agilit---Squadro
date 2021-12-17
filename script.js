@@ -1,20 +1,3 @@
-/*
-PIECES ROUGE
-0-75-192-309-426-543-620 valeurs de top 
-+75 puis +117 et le dernier +77 pour les déplacements
-=========
-background position :
-    - aller -93px -206px
-    - retour -33px -206px
-
-PIECES JAUNE
-0-75-192-309-426-543-620 valeurs de left
-+75 puis +117 et le dernier +77 pour les déplacements
-=========
-background position :
-    - aller 111px 208px;
-    - retour 112px 280px;
-*/
 // Variable globale
 var valuePositions=[0,75,192,309,426,543,620];
 var redScore=[];
@@ -106,7 +89,7 @@ function elementShown(id, text){
     elem.innerHTML=text;
 }
 
-function Redturn(t){
+function Redturn(){
     /*  Indique que c'est au tour des rouges et met à jour 
         le plateau pour que seules les pieces rouges puissent bouger
     */
@@ -120,7 +103,7 @@ function Redturn(t){
 
 }
 
-function Yellowturn(t){
+function Yellowturn(){
     /*  Indique que c'est au tour des jaunes et met à jour 
         le plateau pour que seules les pieces jaunes puissent bouger
     */
@@ -167,15 +150,18 @@ function scoreUpdate(p){
             redScore.push(p);
             document.getElementById('red'+redScore.length).style.backgroundColor = '#ff4d4d';
         }
+        
     }
     if(p.getColor()=="yellow" && p.isOnWayback() && p.getPos()==0){
         yellowScore.forEach(function(item){
             if(item.getNum()==p.getNum())
                 bool=0;
         })
-        if(bool)
+        if(bool){
             yellowScore.push(p);
             document.getElementById('yellow'+yellowScore.length).style.backgroundColor = '#fbc531';
+        }
+        
     }
 }
 
@@ -228,13 +214,11 @@ function movePieces(p){
                 break;
             }
             if(p.getPos()>=0 && pm>0){
-                if(checkCollision(p)){
+                if(checkCollision(p))
                     pm=2;
-                }
                 if(p.isOnWayback()){
-                    if(p.getPos()==0){
+                    if(p.getPos()==0)
                         break;
-                    }
                     p.setPos(p.getPos()-1);
                 }else{
                     p.setPos(p.getPos()+1);
@@ -333,7 +317,6 @@ function initializeBoard(){
     game();
 }
 
-/* ==== Collision test ==== */
 function initTabBoard(){
     /* Initialise le tableau a 2dimension qui represente le tableau 
     */
@@ -449,15 +432,13 @@ function updateTabBoard(p, b){
     }
 }
 
-/* ==== Collision test ==== */
-
 // Deroulement du jeu (main)
 function game(){
     if(turnCounter==-1){
         initializeBoard();
         initTabBoard();
     }
-    console.table(tab_board);
+    console.table(tab_board); // Pour les tests a enlever plus tard
     if(turnCounter%2==0){
         Redturn();
         redPlay();
