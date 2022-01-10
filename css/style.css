@@ -59,7 +59,7 @@ header{
     border: 3px solid #000;
     background-color: rgb(255, 255, 255,0.7);
 }
-.rejouer,.menu{
+.rejouer,.return_menu{
     background: #fff;
     display: block;
     width: 70%;
@@ -70,6 +70,15 @@ header{
     box-shadow: 1px 1px 22px #000;
     font-size: 20px;
     cursor: pointer;
+}
+.rejouer:hover,.return_menu:hover{
+    background: #4b4b4b;
+    transition: 0.5s;
+    color: #fff;
+}
+.rejouer:active,.return_menu:active{
+    transform: scale(0.9);
+    transition: transform 0.1s;
 }
 .piece{
     position: absolute;

@@ -119,8 +119,8 @@ function Yellowturn(){
 function gameOver(){
     /*  Indique la fin de partie */
     elementShown("entete",'Partie terminée ! Victoire des '+vainqueur);
-
-    $(document.getElementsByClassName("boardfin")).fadeIn(2000);
+    document.getElementById("boardfin").style.display="flex";
+    $(document.getElementsByClassName("boardfin")).fadeIn(1500);
     red1.getElement().style.pointerEvents= "none";
     red2.getElement().style.pointerEvents= "none";
     red3.getElement().style.pointerEvents= "none";
