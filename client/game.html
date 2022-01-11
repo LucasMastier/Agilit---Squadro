@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agilité - Squadro</title>
+    <link rel="stylesheet" href="/../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <header id="entete" role="header">
+        C'est votre Tour !
+    </header>
+
+    <div id="content">
+        <div id="right_side">
+            <br>
+            <div id="score">
+                TABLE DES SCORES
+            </div>
+            <div id="scoretext"> <span style="font-family:'Times New Roman', Times, serif">
+                Le premier joueur à faire revenir 4 pièces gagne la partie 
+            </div>
+            <div id="player1">
+                Joueur Rouge <br>
+                <span class="dot" id="red1"></span>
+                <span class="dot" id="red2"></span>
+                <span class="dot" id="red3"></span>
+                <span class="dot" id="red4"></span>
+            </div>
+            <div id="player2">
+                Joueur Jaune <br>
+                <span class="dot" id="yellow1"></span>
+                <span class="dot" id="yellow2"></span>
+                <span class="dot" id="yellow3"></span>
+                <span class="dot" id="yellow4"></span>
+            </div>
+        </div>
+        <div id="left_side">
+            <div class="board">
+                <div class="piece red" id="piece_red1"></div>
+                <div class="piece red" id="piece_red2"></div>
+                <div class="piece red" id="piece_red3"></div>
+                <div class="piece red" id="piece_red4"></div>
+                <div class="piece red" id="piece_red5"></div>
+                <div class="piece yellow" id="piece_yellow1"></div>
+                <div class="piece yellow" id="piece_yellow2"></div>
+                <div class="piece yellow" id="piece_yellow3"></div>
+                <div class="piece yellow" id="piece_yellow4"></div>
+                <div class="piece yellow" id="piece_yellow5"></div>
+            </div>
+            <div class='boardfin' id="boardfin">
+                <button class="rejouer" onclick="window.location.href='game.html';">
+                    Rejouer
+                </button>
+                <button class="return_menu" onclick="window.location.href='index.html';">
+                    Menu Principal
+                </button>
+            </div>
+        </div>
+        <audio id='playeraudio' loop>
+            <source src="audio/musicmenu.mp3" type="audio/mp3" />
+            Votre navigateur ne prend pas en charge cet élement audio.
+        </audio>
+        <div id="audio"> 
+            <button id='playbutton' onclick="document.getElementById('playeraudio').play()"></button> 
+            <button id='pausebutton' onclick="document.getElementById('playeraudio').pause()"></button>
+            <button id='mutebutton' onclick="document.getElementById('playeraudio').volume= 0"></button> 
+            <button onclick="document.getElementById('playeraudio').volume -= 0.004">Vol -</button> 
+            <button onclick="document.getElementById('playeraudio').volume += 0.004">Vol +</button> 
+            <script>document.getElementById('playeraudio').volume=0.005</script>
+        </div>
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
