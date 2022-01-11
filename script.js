@@ -5,6 +5,23 @@ var vainqueur="";
 var yellowScore=[];
 var turnCounter=-1;
 
+//Server connection
+
+const socket = io('http://localhost:3000');
+
+socket.on('init', handleInit);
+
+function handleInit(msg){
+    console.log(msg);
+}
+
+
+
+
+
+
+//Script principal
+
 var tab_board=[
     [0,1,1,1,1,1,0],
     [1,0,0,0,0,0,0],
