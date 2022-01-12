@@ -49,14 +49,15 @@ var yellowScore=[];
 var turnCounter=-1;
 
 //Server connection
-/*
+
 const socket = io('http://localhost:3000');
 
 socket.on('init', handleInit);
 
 function handleInit(msg){
     console.log(msg);
-}*/
+}
+/*
 const sock = io();
 
 const writeEvent = (text) => {
@@ -66,7 +67,7 @@ const writeEvent = (text) => {
 
 writeEvent('Welcome to RPS');
 
-
+*/
 
 
 

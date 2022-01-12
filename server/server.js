@@ -5,8 +5,8 @@ io.on('connection', client => {
 });
 
 
-io.listen(3000);*/
-
+io.listen(3000);
+*/
 
 const http = require('http');
 const express = require('express');
@@ -32,7 +32,7 @@ server.on('error', (err) => {
 });
 
 server.listen(3000, () => {
-    console.log('RPS started on 8080');
+    console.log('RPS started on 3000');
 });
 
 
