@@ -23,6 +23,7 @@ const clientRooms = {};
 
 
 
+
 io.on('connection', client => {
     console.log('Someone connected');
     client.emit('message', 'Hi, you are connected');
@@ -30,12 +31,14 @@ io.on('connection', client => {
     //Création de partie
     client.on('createRoom', createRoom);
 
-    function createRoom(code){
-        clientRooms[client.id] = code;
+    function createRoom(code, team){
+        let roomName = code;
+        clientRooms[client.id] = roomName;
+        client.emit('gameCode',roomName);
         
         client.join(roomName);
         client.number = 1;
-        client.emit('playerNumber',1);
+        client.emit('playerNumber', 1);
     }
 
 
