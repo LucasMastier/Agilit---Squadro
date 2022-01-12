@@ -1,3 +1,45 @@
+//gestion de la musique
+var audio = document.getElementById('playeraudio');
+var playpausebutton = document.getElementById('playpausebutton');
+var countplay=0;
+    //play , pause la musique
+function playpause(){
+    if(countplay==0){
+        playpausebutton.style.backgroundImage="url(audio/pause.png)";
+        audio.play();
+        countplay=1;
+    }else{
+        playpausebutton.style.backgroundImage="url(audio/play.png)";
+        audio.pause();
+        countplay=0;
+    }
+}
+    //mute , unmute la musique
+var countmute=0;
+var currentvolume=0;
+var muteunmutebutton = document.getElementById('muteunmutebutton');
+function muteunmute(){
+    if(countmute==0){
+        muteunmutebutton.style.backgroundImage="url(audio/mute.png)";
+        audio.volume = 0;
+        countmute=1;
+    }else{
+        muteunmutebutton.style.backgroundImage="url(audio/son.png)";
+        audio.volume=volumeslider.value / 1000;
+        countmute=0;
+    }
+}
+    //gérer le volume
+
+var volumeslider=document.getElementById('volumeslider');
+volumeslider.addEventListener('mousemove', setvolume);
+
+function setvolume(){
+    if(countmute==0){
+        audio.volume= volumeslider.value / 1000;
+    }
+}
+
 // Variable globale
 var valuePositions=[0,75,192,309,426,543,620];
 var redScore=[];

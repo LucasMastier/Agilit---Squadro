@@ -64,12 +64,10 @@
             Votre navigateur ne prend pas en charge cet élement audio.
         </audio>
         <div id="audio"> 
-            <button id='playbutton' onclick="document.getElementById('playeraudio').play()"></button> 
-            <button id='pausebutton' onclick="document.getElementById('playeraudio').pause()"></button>
-            <button id='mutebutton' onclick="document.getElementById('playeraudio').volume= 0"></button> 
-            <button onclick="document.getElementById('playeraudio').volume -= 0.004">Vol -</button> 
-            <button onclick="document.getElementById('playeraudio').volume += 0.004">Vol +</button> 
-            <script>document.getElementById('playeraudio').volume=0.005</script>
+            <button id='playpausebutton' onclick="playpause()"></button> 
+            <button id='muteunmutebutton'onclick="muteunmute()"></button> 
+            <input type="range" id="volumeslider" min="0" max="100" value="50" step="1">
+            <script>document.getElementById('playeraudio').volume=50/1000</script>
         </div>
 
     </div>

@@ -209,8 +209,9 @@ header{
 #audio{
     align-items: center;
     width: 10%;
+    padding-left: 10px;
 }
-#playbutton{
+#playpausebutton{
     padding: 0;
     border: 0;
     background: inherit;
@@ -224,7 +225,7 @@ header{
     background-image: url(../audio/play.png);
 }
 
-#pausebutton{
+#muteunmutebutton{
     padding: 0;
     border: 0;
     background: inherit;
@@ -235,19 +236,6 @@ header{
     margin: 20px 2.5% 20px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url(../audio/pause.png);
+    background-image: url(../audio/son.png);
 }
 
-#mutebutton{
-    padding: 0;
-    border: 0;
-    background: inherit;
-    cursor: pointer;
-    outline: none;
-    width: 40px;
-    height: 40px;
-    margin: 20px 2.5% 20px 2.5%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-image: url(../audio/mute.png);
-}
