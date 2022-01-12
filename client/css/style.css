@@ -209,6 +209,7 @@ header{
 #audio{
     align-items: center;
     width: 10%;
+    padding-left: 10px;
 }
 #playpausebutton{
     padding: 0;
