@@ -16,15 +16,33 @@
         <button class="local" onclick="window.location.href='game.html';">
             Jouer en local
         </button>
-        <button class="create" onclick="window.location.href='game.html';">
+        <button class="create" id="popup_create" onclick="popupCreate()">
             Créer une partie
         </button>
-        <button class="join" onclick="window.location.href='game.html';">
+        <button class="join" id="popup_join" onclick="popupJoin()">
             Rejoindre une partie
         </button>
         <button class="regle" onclick="window.location.href='rule.html';">
             Règles
         </button>
+        <div id="join_container">
+            <input type="text" id="code" name="code" placeholder="Entrez le code..." maxlength="4" minlength="4">
+            <span class="erreur_code" id="erreur_code">Le code entré ne correspond à aucune partie !</span>
+            <button type="submit" id="popup_submit" class="popup_submit">Rejoindre</button>
+            <button class="local" onclick="window.location.href='index.html';">
+                Retour
+            </button>
+        </div>
+        <div id="create_container">
+            <div class="select_team">
+                Choissisez une couleur 
+                <div class=redTeam> ROUGE </div>
+                <div class=yellowTeam> JAUNE </div>
+            </div>
+            <span id="code_generated"></span>
+            <div class=creation>Créer la partie</div>
+        </div>
     </div>
+    <script src="index.js" defer></script>
 </body>
 </html>
