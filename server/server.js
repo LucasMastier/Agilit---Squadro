@@ -11,9 +11,7 @@ io.listen(3000);
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
-
 const app = express();
-
 const clientPath = __dirname+'/../client';
 
 app.use(express.static(clientPath));
@@ -21,10 +19,29 @@ app.use(express.static(clientPath));
 const server = http.createServer(app);
 const io = socketio(server);
 
-io.on('connection', (sock) => {
+const clientRooms = {};
+
+
+
+io.on('connection', client => {
     console.log('Someone connected');
-    sock.emit('message', 'Hi, you are connected');
+    client.emit('message', 'Hi, you are connected');
+
+    //Création de partie
+    client.on('createRoom', createRoom);
+
+    function createRoom(code){
+        clientRooms[client.id] = code;
+        
+        client.join(roomName);
+        client.number = 1;
+        client.emit('playerNumber',1);
+    }
+
+
 });
+
+
 
 
 server.on('error', (err) => {
