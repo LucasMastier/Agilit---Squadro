@@ -11,10 +11,12 @@ function popupCreate(){
     var code=makeid();
     document.getElementById("code_generated").innerHTML="Code de la partie : "+code;
     document.getElementById("create_container").style.display="flex";
-    document.getElementById("btn_create").addEventListener('click',createRoom);
+    document.getElementById("btn_create").addEventListener('click',function(){ createRoom(code);});
 }
-function createRoom(code,team){
+function createRoom(code){
     /* creation de la partie */
+    var team=document.querySelector('input[name="r"]:checked').value;
+    console.log(team);
     list_game.push(code);
     //le mettre sur une partie ou en attente 
 }
@@ -27,6 +29,11 @@ function makeid() {
       result += characters.charAt(Math.floor(Math.random() * 
  charactersLength));
    }
+   list_game.forEach(element => {
+       if(result==element){
+           return makeid();
+       }
+   });
    return result;
 }
 //console.log(makeid());
