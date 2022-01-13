@@ -55,12 +55,15 @@ io.on('connection', client => {
 
     function handleJoinRoom(gameCode){
         console.log("Un client essaie de rejoindre la room "+gameCode);
-        const room = io.sockets.adapter.rooms[gameCode];
-        console.log(room);
+        client.join(gameCode);
+        const clients = io.sockets.adapter.rooms.get(gameCode);
+        const nbClients = clients.size;
+        console.log(clients);
+        console.log(nbClients);
         let allUsers;
 
-        if(room){
-            allUsers = room.sockets;
+        if(clients){
+            allUsers = clients.sockets;
             console.log(allUsers);
         }
 
@@ -81,8 +84,6 @@ io.on('connection', client => {
         }
 
         clientRooms[client.id] = gameCode;
-        client.join(gameCode);
-        
         client.number = 2;
         client.emit('playerNumber', 2);
         console.log("Un joueur a rejoint la partie "+gameCode+" !");
