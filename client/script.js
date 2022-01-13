@@ -16,7 +16,6 @@ function playpause(){
 }
     //mute , unmute la musique
 var countmute=0;
-var currentvolume=0;
 var muteunmutebutton = document.getElementById('muteunmutebutton');
 function muteunmute(){
     if(countmute==0){
@@ -139,8 +138,6 @@ let yellow2=new Pieces(2,0,'yellow',1);
 let yellow3=new Pieces(3,0,'yellow',2);
 let yellow4=new Pieces(4,0,'yellow',1);
 let yellow5=new Pieces(5,0,'yellow',3);
-
-// Audio animation (a faire)
 
 
 // Fonction 
@@ -275,6 +272,7 @@ function movePieces(p){
                 break;
             }
             if(p.getPos()>=0 && pm>0){
+                if(!p.isOnWayback() || p.getPos()!=0)
                 if(checkCollision(p))
                     pm=2;
                 if(p.isOnWayback()){
@@ -398,7 +396,7 @@ function checkCollision(p){
         sinon on renvoie false 
     */
     if(p.getColor()=="red"){
-        if(!p.isOnWayback() && tab_board[p.getPos()+1][p.getNum()]==1){
+        if(!p.isOnWayback() && (tab_board[p.getPos()+1][p.getNum()])==1){
             if(p.getPos()+1==1) returnCheckpoint(yellow1);
             if(p.getPos()+1==2) returnCheckpoint(yellow2);
             if(p.getPos()+1==3) returnCheckpoint(yellow3);
@@ -406,7 +404,7 @@ function checkCollision(p){
             if(p.getPos()+1==5) returnCheckpoint(yellow5);
             return true;
         }
-        if(p.isOnWayback() && tab_board[p.getPos()-1][p.getNum()]==1){
+        if(p.isOnWayback() && (tab_board[p.getPos()-1][p.getNum()])==1){
             if(p.getPos()-1==1) returnCheckpoint(yellow1);
             if(p.getPos()-1==2) returnCheckpoint(yellow2);
             if(p.getPos()-1==3) returnCheckpoint(yellow3);
@@ -416,7 +414,7 @@ function checkCollision(p){
         }
     }
     if(p.getColor()=="yellow"){
-        if(!p.isOnWayback() && tab_board[p.getNum()][p.getPos()+1]==1){
+        if(!p.isOnWayback() && (tab_board[p.getNum()][p.getPos()+1])==1){
             if(p.getPos()+1==1) returnCheckpoint(red1);
             if(p.getPos()+1==2) returnCheckpoint(red2);
             if(p.getPos()+1==3) returnCheckpoint(red3);
@@ -424,7 +422,7 @@ function checkCollision(p){
             if(p.getPos()+1==5) returnCheckpoint(red5);
             return true;
         }
-        if(p.isOnWayback() && tab_board[p.getNum()][p.getPos()-1]==1){
+        if(p.isOnWayback() && (tab_board[p.getNum()][p.getPos()-1])==1){
             if(p.getPos()-1==1) returnCheckpoint(red1);
             if(p.getPos()-1==2) returnCheckpoint(red2);
             if(p.getPos()-1==3) returnCheckpoint(red3);
