@@ -53,13 +53,16 @@ io.on('connection', client => {
         let numClients = 0;
         if(allUsers) {
             numClients = Objects.keys(allUsers).length;
+            console.log("Un joueur essaie de rejoindre une partie existante");
         }
 
         if(numClients === 0){
             client.emit('unknownGame');
+            console.log("Un joueur essaie de rejoindre une partie vide");
             return;
         } else if(numClients > 1){
             client.emit('tooManyPlayers');
+            console.log("Un joueur essaie de rejoindre une partie pleine");
             return;
         }
 
@@ -67,14 +70,12 @@ io.on('connection', client => {
         client.join(gameCode);
         client.number = 2;
         client.emit('playerNumber', 2);
+        console.log("Un joueur a rejoint la partie "+gameCode+" !");
         
     }
 
 
 });
-
-
-
 
 server.on('error', (err) => {
     console.error('Server error:', err);

@@ -5,11 +5,28 @@ let playerNumber;
 
 socket.on('init', handleInit);
 socket.on('playerNumber', handlePlayerNumber);
+socket.on('unknownGame', handleUnknownGame);
+socket.on('tooManyPlayers', handleFullGame);
+
+function handleInit(){
+    
+}
+
+function handleUnknownGame(){
+    alert("La partie n'existe pas");
+}
+
+function handleFullGame(){
+    alert("La partie est déjà complète");
+}
+
+function reset(){
+    playerNumber = null;
+}
 
 
 function handlePlayerNumber(number){
     playerNumber = number;
-
 }
 
 
