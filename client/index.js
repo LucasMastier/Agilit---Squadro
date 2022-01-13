@@ -744,6 +744,9 @@ function updateTabBoard(p, b){
 }
 
 function waiting(){
+    /*  fonction qui interdit l'interaction avec le plateau en attendant
+        que la room se remplisse
+    */
     elementShown("entete","En attente d'un joueur !");
     red1.getElement().style.pointerEvents= "none";
     red2.getElement().style.pointerEvents= "none";
@@ -757,7 +760,62 @@ function waiting(){
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
 }
+function waitingStart(){
+    /* fonction waiting utilisé au début qui attribue les droits d'interaction au joueur concerné
+    */
+    if(turnCounter%2==1){
+        yellow1.getElement().style.pointerEvents= "auto";
+        yellow2.getElement().style.pointerEvents= "auto";
+        yellow3.getElement().style.pointerEvents= "auto";
+        yellow4.getElement().style.pointerEvents= "auto";
+        yellow5.getElement().style.pointerEvents= "auto";
+    }
+    if(turnCounter%2==0){
+        red1.getElement().style.pointerEvents= "auto";
+        red2.getElement().style.pointerEvents= "auto";
+        red3.getElement().style.pointerEvents= "auto";
+        red4.getElement().style.pointerEvents= "auto";
+        red5.getElement().style.pointerEvents= "auto";
+    }
+}
+function waitingRed(){
+    /*  fonction qui bloque toutes les pieces cote joueur jaune 
+        en attendant que le joueur rouge ait joué
+    */
+    let turn=`C'est au tour des  <span id='red_player_title'>rouges</span> !`;
+    elementShown("entete",turn);
+    red1.getElement().style.pointerEvents= "none";
+    red2.getElement().style.pointerEvents= "none";
+    red3.getElement().style.pointerEvents= "none";
+    red4.getElement().style.pointerEvents= "none";
+    red5.getElement().style.pointerEvents= "none";
+    
+    yellow1.getElement().style.pointerEvents= "none";
+    yellow2.getElement().style.pointerEvents= "none";
+    yellow3.getElement().style.pointerEvents= "none";
+    yellow4.getElement().style.pointerEvents= "none";
+    yellow5.getElement().style.pointerEvents= "none";
+}
 
+function waitingYellow(){
+    /*  fonction qui bloque toutes les pieces cote joueur rouge
+        en attendant que le joueur jaune ait joué
+    */
+    let turn=`C'est au tour des <span id='yellow_player_title'>jaunes</span> !`;
+    elementShown("entete",turn);
+
+    red1.getElement().style.pointerEvents= "none";
+    red2.getElement().style.pointerEvents= "none";
+    red3.getElement().style.pointerEvents= "none";
+    red4.getElement().style.pointerEvents= "none";
+    red5.getElement().style.pointerEvents= "none";
+    
+    yellow1.getElement().style.pointerEvents= "none";
+    yellow2.getElement().style.pointerEvents= "none";
+    yellow3.getElement().style.pointerEvents= "none";
+    yellow4.getElement().style.pointerEvents= "none";
+    yellow5.getElement().style.pointerEvents= "none";
+}
 // Deroulement du jeu (main)
 function game(){
     console.log(playerTeam);
