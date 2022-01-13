@@ -27,29 +27,33 @@ const clientRooms = {};
 io.on('connection', client => {
     console.log('Someone connected');
     client.emit('message', 'Hi, you are connected');
+    
 
     //Création de partie
     client.on('createRoom', createRoom);
     //Rejoindre une partie
-    client.on('joinGame', handleJoinGame);
+    client.on('joinRoom', handleJoinRoom);
 
     function createRoom(code, team){
         let roomName = code;
         clientRooms[client.id] = roomName;
         client.emit('gameCode',roomName);
+        console.log(roomName);
         
         client.join(roomName);
-        client.number = 1;
+        client.team = team;
         client.emit('playerNumber', 1);
         client.emit('init',1);
     }
 
-    function handleJoinGame(gameCode){
+    function handleJoinRoom(gameCode){
         const room = io.sockets.adapter.rooms[gameCode];
         let allUsers;
         if(room){
             allUsers = room.sockets;
+            console.log(allUsers);
         }
+
         let numClients = 0;
         if(allUsers) {
             numClients = Objects.keys(allUsers).length;
@@ -68,6 +72,7 @@ io.on('connection', client => {
 
         clientRooms[client.id] = gameCode;
         client.join(gameCode);
+        
         client.number = 2;
         client.emit('playerNumber', 2);
         console.log("Un joueur a rejoint la partie "+gameCode+" !");

@@ -1,7 +1,7 @@
 var list_game=[];
 var btn_create = document.getElementById("btn_create");
 const socket = io('http://localhost:3000');
-let playerNumber;
+let playerTeam;
 
 socket.on('init', handleInit);
 socket.on('playerNumber', handlePlayerNumber);
@@ -9,7 +9,7 @@ socket.on('unknownGame', handleUnknownGame);
 socket.on('tooManyPlayers', handleFullGame);
 
 function handleInit(){
-    
+
 }
 
 function handleUnknownGame(){
@@ -21,20 +21,22 @@ function handleFullGame(){
 }
 
 function reset(){
-    playerNumber = null;
+    playerTeam = null;
 }
 
 
-function handlePlayerNumber(number){
-    playerNumber = number;
+function handlePlayerNumber(team){
+    playerTeam = team;
 }
 
 
 function popupJoin(){
     /* fonction qui affiche le menu join 
     */
+    
     document.getElementById("join_container").style.display="flex";
-    document.getElementById("btn_join").addEventListener('click',verify_code);
+    var code = document.getElementById("code").value;
+    document.getElementById("btn_join").addEventListener('click',verify_code(code));
 }
 function popupCreate(){
     /* fonction qui affiche le menu de creation */
@@ -51,7 +53,7 @@ function createRoom(code){
     document.getElementById("main_menu").style.display="none";
     document.getElementById("multiplayer-game").style.display="block";
     //le mettre sur une partie ou en attente 
-    socket.emit('createRoom', code);
+    socket.emit('createRoom', code, team);
 }
 
 function makeid() {
@@ -71,9 +73,10 @@ function makeid() {
    return result;
 }
 //console.log(makeid());
-function verify_code(){
+function verify_code(code){
     /* Verifie le code entre par l'user si le code existe ou pas 
     */
+   /*
     let finded=false;
     list_game.forEach(element => {
         if(element==document.getElementById("code").value){
@@ -83,7 +86,8 @@ function verify_code(){
         }
     });
     if(!finded)
-        document.getElementById("erreur_code").style.visibility="visible";
+        document.getElementById("erreur_code").style.visibility="visible";*/
+        socket.emit('joinRoom', code);
 }
 
 
