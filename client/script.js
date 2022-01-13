@@ -193,8 +193,21 @@ function gameOver(){
     yellow3.getElement().style.pointerEvents= "none";
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
+}
 
-
+function waiting(){
+    elementShown("entete","En attente d'un joueur !");
+    red1.getElement().style.pointerEvents= "none";
+    red2.getElement().style.pointerEvents= "none";
+    red3.getElement().style.pointerEvents= "none";
+    red4.getElement().style.pointerEvents= "none";
+    red5.getElement().style.pointerEvents= "none";
+    
+    yellow1.getElement().style.pointerEvents= "none";
+    yellow2.getElement().style.pointerEvents= "none";
+    yellow3.getElement().style.pointerEvents= "none";
+    yellow4.getElement().style.pointerEvents= "none";
+    yellow5.getElement().style.pointerEvents= "none";
 }
 
 function scoreUpdate(p){
