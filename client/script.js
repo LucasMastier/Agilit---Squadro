@@ -162,7 +162,7 @@ function Redturn(){
     /*  Indique que c'est au tour des rouges et met à jour 
         le plateau pour que seules les pieces rouges puissent bouger
     */
-    let turn=`C'est au tour des rouges !`;
+    let turn=`C'est au tour des  <span id='red_player_title'>rouges</span> !`;
     elementShown("entete",turn);
     yellow1.getElement().style.pointerEvents= "none";
     yellow2.getElement().style.pointerEvents= "none";
@@ -176,7 +176,7 @@ function Yellowturn(){
     /*  Indique que c'est au tour des jaunes et met à jour 
         le plateau pour que seules les pieces jaunes puissent bouger
     */
-    let turn=`C'est au tour des jaunes !`;
+    let turn=`C'est au tour des <span id='yellow_player_title'>jaunes</span> !`;
     elementShown("entete",turn);
     red1.getElement().style.pointerEvents= "none";
     red2.getElement().style.pointerEvents= "none";

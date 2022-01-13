@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
 
+@font-face {
+    font-family: Game;
+    src: url(GameOfSquids.ttf);
+  }
+
 *{
     margin: 0;
     padding: 0;
@@ -8,54 +13,78 @@
     font-family: 'Roboto';
 }
 body{
-    background: url(../img/background.png);
+    background: url(../img/scifibg.jpg);
+    background-size: 1920px 1080px;
 }
+
+
+
+
+  
 header{
     background: #4b4b4b;
     color: white;
     width: 100%;
     height: 60px;
-    font-weight: 900;
+    font-weight:900;
     font-size: 35px;
     text-align: center;
     padding-top: 10px;
     letter-spacing: 2px;
+    font-family: 'Roboto';
 }
 .menu{
     display:flex;
     position: absolute;
     flex-direction: column;
     align-items: center;
-    width: 500px;
-    background: #fff;
+    width: 700px;
+    background: transparent;
     border-radius: 10px;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    border: 3px solid #000;
-    background-color: rgb(255, 255, 255,0.7);
+    border: 2px solid white;
+    
 }
 h2{
     margin-top: 30px;
     letter-spacing: 1px;
     font-size: 2em;
+    font-family: 'Game' !important;
+    color: white;
 }
 .local, .create, .join, .regle{
-    background: #fff;
-    display: block;
-    width: 70%;
+    
+background: rgb(63,94,251);
+background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#fc466b",GradientType=1);
+    background-size: 500px 400px;
+    backdrop-filter: blur(10px);
+    width: 50%;
     text-align: center;
     padding: 1em;
     border-radius: 10px;
     margin: 1em;
-    box-shadow: 1px 1px 22px #000;
     font-size: 20px;
     cursor: pointer;
+    color:white;
+    outline: none;
+    border: 3px solid rgba(128,128,128,0.3);
 }
+
 button:hover{
-    background: #4b4b4b;
-    transition: 0.5s;
-    color: #fff;
+    
+    border: 3px solid white ;
+    transition: 0.2s;
+    color: white;
+    
+    filter: drop-shadow(0 0 1rem crimson);
+    
+    
+    
 }
 button:active{
     transform: scale(0.9);
