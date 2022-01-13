@@ -423,11 +423,6 @@ function Redturn(){
     */
     let turn=`C'est au tour des  <span id='red_player_title'>rouges</span> !`;
     elementShown("entete",turn);
-    yellow1.getElement().style.pointerEvents= "none";
-    yellow2.getElement().style.pointerEvents= "none";
-    yellow3.getElement().style.pointerEvents= "none";
-    yellow4.getElement().style.pointerEvents= "none";
-    yellow5.getElement().style.pointerEvents= "none";
     
     red1.getElement().style.pointerEvents= "auto";
     red2.getElement().style.pointerEvents= "auto";
@@ -443,11 +438,6 @@ function Yellowturn(){
     */
     let turn=`C'est au tour des <span id='yellow_player_title'>jaunes</span> !`;
     elementShown("entete",turn);
-    red1.getElement().style.pointerEvents= "none";
-    red2.getElement().style.pointerEvents= "none";
-    red3.getElement().style.pointerEvents= "none";
-    red4.getElement().style.pointerEvents= "none";
-    red5.getElement().style.pointerEvents= "none";
 
     yellow1.getElement().style.pointerEvents= "auto";
     yellow2.getElement().style.pointerEvents= "auto";
@@ -616,29 +606,11 @@ function piecePlayed(p){
 function changeTurn(p){
     if(turnCounter%2==1 && p.getColor()=="yellow"){
         turnCounter++;
-        yellow1.getElement().style.pointerEvents= "none";
-        yellow2.getElement().style.pointerEvents= "none";
-        yellow3.getElement().style.pointerEvents= "none";
-        yellow4.getElement().style.pointerEvents= "none";
-        yellow5.getElement().style.pointerEvents= "none";
-        red1.getElement().style.pointerEvents= "auto";
-        red2.getElement().style.pointerEvents= "auto";
-        red3.getElement().style.pointerEvents= "auto";
-        red4.getElement().style.pointerEvents= "auto";
-        red5.getElement().style.pointerEvents= "auto";
+        waitingRed();
     }
     if(turnCounter%2==0 && p.getColor()=="red"){
         turnCounter++;
-        red1.getElement().style.pointerEvents= "none";
-        red2.getElement().style.pointerEvents= "none";
-        red3.getElement().style.pointerEvents= "none";
-        red4.getElement().style.pointerEvents= "none";
-        red5.getElement().style.pointerEvents= "none";
-        yellow1.getElement().style.pointerEvents= "auto";
-        yellow2.getElement().style.pointerEvents= "auto";
-        yellow3.getElement().style.pointerEvents= "auto";
-        yellow4.getElement().style.pointerEvents= "auto";
-        yellow5.getElement().style.pointerEvents= "auto";
+        waitingYellow();
     }
 }
 
