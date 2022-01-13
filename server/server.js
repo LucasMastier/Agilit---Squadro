@@ -36,6 +36,7 @@ io.on('connection', client => {
     client.on('joinRoom', handleJoinRoom);
     //Gameplay
     client.on("movePieceRed", movePieceRed);
+    client.on("movePieceYellow", movePieceYellow);
 
     function movePieceRed(piece, gameCode){
         //On recupère les sockets id
@@ -44,15 +45,30 @@ io.on('connection', client => {
 
         //On parcourt les clients par leur socket id
         for (const clientId of clients ) {
+
             const clientSocket = io.sockets.sockets.get(clientId);
 
             if(clientSocket.team == "jaune"){
-
                 clientSocket.emit('moveRedPieceRequest', piece);
                 console.log("Envoi de la requete moveRedPieceRequest a "+clientSocket.id);
+            }      
+       }
+    }
 
-            }
+    function movePieceYellow(piece, gameCode){
+        //On recupère les sockets id
+        console.log("Entrée dans movePieceRed");
+        const clients = io.sockets.adapter.rooms.get(gameCode);
+
+        //On parcourt les clients par leur socket id
+        for (const clientId of clients ) {
             
+            const clientSocket = io.sockets.sockets.get(clientId);
+
+            if(clientSocket.team == "rouge"){
+                clientSocket.emit('moveYellowPieceRequest', piece);
+                console.log("Envoi de la requete moveRedPieceRequest a "+clientSocket.id);
+            }      
        }
     }
 

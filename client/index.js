@@ -1,7 +1,9 @@
 var list_game=[];
 var btn_create = document.getElementById("btn_create");
 const socket = io('http://localhost:3000');
+//Equipe du joueur
 let playerTeam = "rouge";
+//Nom de la partie dans lequel le joueur est présent
 let gameCode;
 
 //Script principal
@@ -92,18 +94,23 @@ socket.on('displayGame', displayGame);
 socket.on('gameName', handleGameName);
 
 function handleGameName(code){
+    //Récupère le code de la partie actuelle et la stocke dans gameCode
     gameCode = code;
 }
 
 function initGame(){
+    //Permet de lancer la partie (on initialise le plateau et on lance le tour)
     game();
 }
 
 function testRoom(code){
+    //debug
     console.log("Un joueur est connecté a la room "+code);
 }
 
 function displayGame(){
+    //Permet de passer du menu principal au plateau de jeu (la partie multijoueur se déroule sur la même
+    //page que l'index afin de garder la même socket)
     document.getElementById("main_menu").style.display="none";
     document.getElementById("multiplayer-game").style.display="block";
 }
@@ -114,19 +121,23 @@ function handleInit(){
 }
 
 function handleUnknownGame(){
+    //Affiche une erreur si la partie recherchée n'éxiste pas
     alert("La partie n'existe pas");
 }
 
 function handleFullGame(){
+    //Affiche une erreur si la partie est complète
     alert("La partie est déjà complète");
 }
 
 function reset(){
+    //Reset l'attribut playerTeam du joueur
     playerTeam = null;
 }
 
 
 function handlePlayerTeam(team){
+    //Affiche une erreur si 
     playerTeam = team;
     console.log("dans handlePlayerTeam "+playerTeam);
 }
@@ -134,7 +145,10 @@ function handlePlayerTeam(team){
 
 
 //Requetes de mouvements de pieces
-/*
+
+//On initialise les objets pieces afin de placer des evenements au click
+//On utilisera ces evenements pour envoyer une requete au serveur afin de
+//transmettre a l'autre joueur les coups du joueur actuel
 let r1 = document.getElementById("piece_red1");
 let r2 = document.getElementById("piece_red2");
 let r3 = document.getElementById("piece_red3");
@@ -145,28 +159,82 @@ let y1 = document.getElementById("piece_yellow1");
 let y2 = document.getElementById("piece_yellow2");
 let y3 = document.getElementById("piece_yellow3");
 let y4 = document.getElementById("piece_yellow4");
-let y5 = document.getElementById("piece_yellow5");*/
+let y5 = document.getElementById("piece_yellow5");
 
 
 let red_pieces = [red1,red2,red3,red4,red5];
 let yellow_pieces = [yellow1,yellow2,yellow3,yellow4,yellow5];
 
 
-socket.on('moveRedPieceRequest', handleMove);
+socket.on('moveRedPieceRequest', handleMoveRed);
+socket.on('moveYellowPieceRequest', handleMoveYellow);
 
-function handleMove(piece){
+function handleMoveRed(piece){
+    //Effectue la mouvement de la pièce en fonction de la requête du serveur
     piecePlayed(red_pieces[piece]);
     
     console.log("Requete moveRedPieceRequest recue "+red_pieces[piece]);
 }
 
+function handleMoveYellow(piece){
+    piecePlayed(yellow_pieces[piece]);
+    
+    console.log("Requete moveRedPieceRequest recue "+yellow_pieces[piece]);
+}
 
-//Envoi de mouvement de piece
-document.getElementById("piece_red1").addEventListener("click", function(){ 
+
+//Envoi de mouvement de piece ROUGES
+r1.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 0, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
  });
 
+r2.addEventListener("click", function(){ 
+    socket.emit("movePieceRed", 1, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+});
+
+r3.addEventListener("click", function(){ 
+    socket.emit("movePieceRed", 2, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+ });
+
+r4.addEventListener("click", function(){ 
+    socket.emit("movePieceRed", 3, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+});
+
+r5.addEventListener("click", function(){ 
+    socket.emit("movePieceRed", 4, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+ });
+
+
+ //Envoi de mouvements de pieces JAUNES
+ y1.addEventListener("click", function(){ 
+    socket.emit("movePieceYellow", 0, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+ });
+
+y2.addEventListener("click", function(){ 
+    socket.emit("movePieceYellow", 1, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+});
+
+y3.addEventListener("click", function(){ 
+    socket.emit("movePieceYellow", 2, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+ });
+
+y4.addEventListener("click", function(){ 
+    socket.emit("movePieceYellow", 3, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+});
+
+y5.addEventListener("click", function(){ 
+    socket.emit("movePieceYellow", 4, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+ });
 
 
 
