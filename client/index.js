@@ -3,6 +3,10 @@ var btn_create = document.getElementById("btn_create");
 const socket = io('http://localhost:3000');
 let playerNumber;
 
+socket.on('init', handleInit);
+socket.on('playerNumber', handlePlayerNumber);
+
+
 function handlePlayerNumber(number){
     playerNumber = number;
 
