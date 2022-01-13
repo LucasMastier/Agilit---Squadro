@@ -400,6 +400,46 @@ function movePieces(p){
     }
 }
 
+function piecePlayed(p){
+    /*  piece jouer par un joueur permet de passer l'info a l'autre joueur 
+        pour actualiser son plateau 
+    */
+    let pm=p.getPt_mvt();
+    while(pm>0){
+        if(p.getPos()==5 && pm>0 && !p.isOnWayback()){
+            returnPieces(p);
+            if(p.getColor()=="red"){
+                tab_board[p.getPos()-1][p.getNum()]=0;
+                tab_board[p.getPos()][p.getNum()]=1;
+            }
+            if(p.getColor()=="yellow"){
+                tab_board[p.getNum()][p.getPos()-1]=0;
+                tab_board[p.getNum()][p.getPos()]=1;
+            }
+            break;
+        }
+        if(p.getPos()>=0 && pm>0){
+            if(!p.isOnWayback() || p.getPos()!=0)
+            if(checkCollision(p))
+                pm=2;
+            if(p.isOnWayback()){
+                if(p.getPos()==0)
+                    break;
+                p.setPos(p.getPos()-1);
+            }else{
+                p.setPos(p.getPos()+1);
+            }
+            pm--;
+            updateTabBoard(p,true);
+        }
+    }
+    animatePieces(p);
+    changeTurn(p);
+    redUpdate();
+    yellowUpdate();
+    game();
+}
+
 function changeTurn(p){
     if(turnCounter%2==1 && p.getColor()=="yellow"){
         turnCounter++;
