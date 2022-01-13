@@ -158,6 +158,12 @@ function Redturn(){
     yellow3.getElement().style.pointerEvents= "none";
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
+    
+    red1.getElement().style.pointerEvents= "auto";
+    red2.getElement().style.pointerEvents= "auto";
+    red3.getElement().style.pointerEvents= "auto";
+    red4.getElement().style.pointerEvents= "auto";
+    red5.getElement().style.pointerEvents= "auto";
 
 }
 
@@ -172,6 +178,12 @@ function Yellowturn(){
     red3.getElement().style.pointerEvents= "none";
     red4.getElement().style.pointerEvents= "none";
     red5.getElement().style.pointerEvents= "none";
+
+    yellow1.getElement().style.pointerEvents= "auto";
+    yellow2.getElement().style.pointerEvents= "auto";
+    yellow3.getElement().style.pointerEvents= "auto";
+    yellow4.getElement().style.pointerEvents= "auto";
+    yellow5.getElement().style.pointerEvents= "auto";
 }
 
 function gameOver(){
@@ -529,4 +541,3 @@ function game(){
 }
 
 game();
-

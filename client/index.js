@@ -81,20 +81,18 @@ function makeid() {
 function verify_code(){
     /* Verifie le code entre par l'user si le code existe ou pas 
     */
-   /*
-    let finded=false;
+    let found=false;
     list_game.forEach(element => {
         if(element==document.getElementById("code").value){
             //l'envoyer sur la partie correspondante
             console.log(document.getElementById("code").value);
             finded=true;
+            var code = document.getElementById("code").value;
+            socket.emit('joinRoom', code);
         }
     });
-    if(!finded)
-        document.getElementById("erreur_code").style.visibility="visible";*/
-        var code = document.getElementById("code").value;
-        console.log(code);
-        socket.emit('joinRoom', code);
+    if(!found)
+        document.getElementById("erreur_code").style.visibility="visible";
 }
 
 
@@ -240,18 +238,23 @@ function elementShown(id, text){
     let elem=document.getElementById(id);
     elem.innerHTML=text;
 }
-
 function Redturn(){
     /*  Indique que c'est au tour des rouges et met à jour 
         le plateau pour que seules les pieces rouges puissent bouger
     */
-    let turn=`C'est au tour des rouges !`;
+    let turn=`C'est au tour des  <span id='red_player_title'>rouges</span> !`;
     elementShown("entete",turn);
     yellow1.getElement().style.pointerEvents= "none";
     yellow2.getElement().style.pointerEvents= "none";
     yellow3.getElement().style.pointerEvents= "none";
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
+    
+    red1.getElement().style.pointerEvents= "auto";
+    red2.getElement().style.pointerEvents= "auto";
+    red3.getElement().style.pointerEvents= "auto";
+    red4.getElement().style.pointerEvents= "auto";
+    red5.getElement().style.pointerEvents= "auto";
 
 }
 
@@ -259,13 +262,19 @@ function Yellowturn(){
     /*  Indique que c'est au tour des jaunes et met à jour 
         le plateau pour que seules les pieces jaunes puissent bouger
     */
-    let turn=`C'est au tour des jaunes !`;
+    let turn=`C'est au tour des <span id='yellow_player_title'>jaunes</span> !`;
     elementShown("entete",turn);
     red1.getElement().style.pointerEvents= "none";
     red2.getElement().style.pointerEvents= "none";
     red3.getElement().style.pointerEvents= "none";
     red4.getElement().style.pointerEvents= "none";
     red5.getElement().style.pointerEvents= "none";
+
+    yellow1.getElement().style.pointerEvents= "auto";
+    yellow2.getElement().style.pointerEvents= "auto";
+    yellow3.getElement().style.pointerEvents= "auto";
+    yellow4.getElement().style.pointerEvents= "auto";
+    yellow5.getElement().style.pointerEvents= "auto";
 }
 
 function gameOver(){
