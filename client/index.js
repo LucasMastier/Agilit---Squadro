@@ -36,7 +36,7 @@ function popupJoin(){
     
     document.getElementById("join_container").style.display="flex";
     var code = document.getElementById("code").value;
-    document.getElementById("btn_join").addEventListener('click',verify_code(code));
+    document.getElementById("btn_join").addEventListener('click',function(){verify_code(code);});
 }
 function popupCreate(){
     /* fonction qui affiche le menu de creation */
@@ -76,6 +76,7 @@ function makeid() {
 function verify_code(code){
     /* Verifie le code entre par l'user si le code existe ou pas 
     */
+   console.log("test");
    /*
     let finded=false;
     list_game.forEach(element => {
