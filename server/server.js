@@ -26,8 +26,7 @@ const clientRooms = {};
 
 
 io.on('connection', client => {
-    
-    console.log('Someone connected');
+    console.log(client.id+' is connected');
     client.emit('message', 'Hi, you are connected');
     
 
@@ -35,6 +34,27 @@ io.on('connection', client => {
     client.on('createRoom', createRoom);
     //Rejoindre une partie
     client.on('joinRoom', handleJoinRoom);
+    //Gameplay
+    client.on("movePieceRed", movePieceRed);
+
+    function movePieceRed(piece, gameCode){
+        //On recupère les sockets id
+        console.log("Entrée dans movePieceRed");
+        const clients = io.sockets.adapter.rooms.get(gameCode);
+
+        //On parcourt les clients par leur socket id
+        for (const clientId of clients ) {
+            const clientSocket = io.sockets.sockets.get(clientId);
+
+            if(clientSocket.team == "jaune"){
+
+                clientSocket.emit('moveRedPieceRequest', piece);
+                console.log("Envoi de la requete moveRedPieceRequest a "+clientSocket.id);
+
+            }
+            
+       }
+    }
 
     function createRoom(code, team){
         let roomName = code;
@@ -47,46 +67,47 @@ io.on('connection', client => {
         client.join(roomName);
         console.log("L'hote a crée la partie "+clientRooms[client.id]);
         client.team = team;
+        
+        
         client.emit('playerNumber', 1);
         client.emit('init',1);
+        client.emit('gameName', code);
 
         io.to(code).emit("testRoom", code);
     }
 
     function handleJoinRoom(gameCode){
         console.log("Un client essaie de rejoindre la room "+gameCode);
-        client.join(gameCode);
+        
         const clients = io.sockets.adapter.rooms.get(gameCode);
+        
         const nbClients = clients.size;
         console.log(clients);
         console.log(nbClients);
-        let allUsers;
+        
 
-        if(clients){
-            allUsers = clients.sockets;
-            console.log(allUsers);
-        }
 
-        let numClients = 0;
-        if(allUsers) {
-            numClients = Objects.keys(allUsers).length;
-            console.log("Un joueur essaie de rejoindre une partie existante");
-        }
-
-        if(numClients === 0){
+        if(nbClients === 0){
             client.emit('unknownGame');
             console.log("Un joueur essaie de rejoindre une partie vide");
             return;
-        } else if(numClients > 1){
+        } else if(nbClients > 1){
             client.emit('tooManyPlayers');
             console.log("Un joueur essaie de rejoindre une partie pleine");
             return;
         }
 
         clientRooms[client.id] = gameCode;
-        client.number = 2;
-        client.emit('playerNumber', 2);
         console.log("Un joueur a rejoint la partie "+gameCode+" !");
+        client.join(gameCode);
+
+        io.to(gameCode).emit("testRoom", "test");
+        client.team = "jaune";
+        client.emit('playerTeam', client.team);
+        client.emit('gameName', gameCode);
+        client.emit('displayGame');
+
+        io.to(gameCode).emit("initGame");
         
     }
 

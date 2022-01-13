@@ -1,16 +1,111 @@
 var list_game=[];
 var btn_create = document.getElementById("btn_create");
 const socket = io('http://localhost:3000');
-let playerTeam;
+let playerTeam = "rouge";
+let gameCode;
+
+//Script principal
+
+var tab_board=[
+    [0,1,1,1,1,1,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0],
+
+];
+
+// Class
+class Pieces{ 
+    constructor(num,pos,color,pt_mvt){
+        this.num=num;
+        this.pos=pos;
+        this.Wayback=false;
+        this.color=color;
+        this.pt_mvt=pt_mvt;
+    }
+    getColor(){
+        return this.color;
+    }
+    isOnWayback(){
+        return this.Wayback;
+    }
+    onWayback(){
+        this.Wayback=true;
+        if(this.pt_mvt==1){
+            this.pt_mvt=3;
+            return;
+        }
+        if(this.pt_mvt==3){
+            this.pt_mvt=1;
+            return;
+        }
+    }
+    getPt_mvt(){
+        return this.pt_mvt;
+    }
+    setPos(pos){
+        this.pos=pos;
+    }
+    getPos(){
+        return this.pos;
+    }
+    getValuePos(){
+        return valuePositions[this.pos];
+    }
+    getNum(){
+        return this.num;
+    }
+    getElement(){
+        return document.getElementById('piece_'+this.getColor()+this.getNum());
+    }
+    reset(){
+        this.Wayback=false;
+        this.pos=0;
+    }
+}
+
+// Objets
+let red1=new Pieces(1,0,'red',1);
+let red2=new Pieces(2,0,'red',3);
+let red3=new Pieces(3,0,'red',2);
+let red4=new Pieces(4,0,'red',3);
+let red5=new Pieces(5,0,'red',1);
+
+let yellow1=new Pieces(1,0,'yellow',3);
+let yellow2=new Pieces(2,0,'yellow',1);
+let yellow3=new Pieces(3,0,'yellow',2);
+let yellow4=new Pieces(4,0,'yellow',1);
+let yellow5=new Pieces(5,0,'yellow',3);
+
+//Server
 
 socket.on('init', handleInit);
-socket.on('playerNumber', handlePlayerNumber);
+socket.on('playerTeam', handlePlayerTeam);
 socket.on('unknownGame', handleUnknownGame);
 socket.on('tooManyPlayers', handleFullGame);
 socket.on('testRoom', testRoom);
+socket.on('initGame', initGame);
+socket.on('displayGame', displayGame);
+socket.on('gameName', handleGameName);
+
+function handleGameName(code){
+    gameCode = code;
+}
+
+function initGame(){
+    game();
+}
 
 function testRoom(code){
     console.log("Un joueur est connecté a la room "+code);
+}
+
+function displayGame(){
+    document.getElementById("main_menu").style.display="none";
+    document.getElementById("multiplayer-game").style.display="block";
 }
 
 
@@ -31,9 +126,93 @@ function reset(){
 }
 
 
-function handlePlayerNumber(team){
+function handlePlayerTeam(team){
     playerTeam = team;
+    console.log("dans handlePlayerTeam "+playerTeam);
 }
+
+
+
+//Requetes de mouvements de pieces
+/*
+let r1 = document.getElementById("piece_red1");
+let r2 = document.getElementById("piece_red2");
+let r3 = document.getElementById("piece_red3");
+let r4 = document.getElementById("piece_red4");
+let r5 = document.getElementById("piece_red5");
+
+let y1 = document.getElementById("piece_yellow1");
+let y2 = document.getElementById("piece_yellow2");
+let y3 = document.getElementById("piece_yellow3");
+let y4 = document.getElementById("piece_yellow4");
+let y5 = document.getElementById("piece_yellow5");*/
+
+
+let red_pieces = [red1,red2,red3,red4,red5];
+let yellow_pieces = [yellow1,yellow2,yellow3,yellow4,yellow5];
+
+
+socket.on('moveRedPieceRequest', handleMove);
+
+function handleMove(piece){
+    piecePlayed(red_pieces[piece]);
+    
+    console.log("Requete moveRedPieceRequest recue "+red_pieces[piece]);
+}
+
+
+//Envoi de mouvement de piece
+document.getElementById("piece_red1").addEventListener("click", function(){ 
+    socket.emit("movePieceRed", 0, gameCode);
+    console.log("Envoi de la requete de mouvement au serveur");
+ });
+
+
+
+
+ function piecePlayed(p){
+    /*  piece jouer par un joueur permet de passer l'info a l'autre joueur 
+        pour actualiser son plateau 
+    */
+    let pm=p.getPt_mvt();
+    while(pm>0){
+        if(p.getPos()==5 && pm>0 && !p.isOnWayback()){
+            returnPieces(p);
+            if(p.getColor()=="red"){
+                tab_board[p.getPos()-1][p.getNum()]=0;
+                tab_board[p.getPos()][p.getNum()]=1;
+            }
+            if(p.getColor()=="yellow"){
+                tab_board[p.getNum()][p.getPos()-1]=0;
+                tab_board[p.getNum()][p.getPos()]=1;
+            }
+            break;
+        }
+        if(p.getPos()>=0 && pm>0){
+            if(!p.isOnWayback() || p.getPos()!=0)
+            if(checkCollision(p))
+                pm=2;
+            if(p.isOnWayback()){
+                if(p.getPos()==0)
+                    break;
+                p.setPos(p.getPos()-1);
+            }else{
+                p.setPos(p.getPos()+1);
+            }
+            pm--;
+            updateTabBoard(p,true);
+        }
+    }
+    animatePieces(p);
+    changeTurn(p);
+    redUpdate();
+    yellowUpdate();
+    game();
+}
+
+
+
+
 
 
 function popupJoin(){
@@ -59,6 +238,7 @@ function createRoom(code){
     document.getElementById("multiplayer-game").style.display="block";
     //le mettre sur une partie ou en attente 
     socket.emit('createRoom', code, team);
+    waiting();
 }
 
 function makeid() {
@@ -150,88 +330,15 @@ var valuePositions=[0,75,192,309,426,543,620];
 var redScore=[];
 var vainqueur="";
 var yellowScore=[];
-var turnCounter=-1;
+var turnCounter=2;
 
 
 
 
 
 
-//Script principal
 
-var tab_board=[
-    [0,1,1,1,1,1,0],
-    [1,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0],
 
-];
-
-// Class
-class Pieces{ 
-    constructor(num,pos,color,pt_mvt){
-        this.num=num;
-        this.pos=pos;
-        this.Wayback=false;
-        this.color=color;
-        this.pt_mvt=pt_mvt;
-    }
-    getColor(){
-        return this.color;
-    }
-    isOnWayback(){
-        return this.Wayback;
-    }
-    onWayback(){
-        this.Wayback=true;
-        if(this.pt_mvt==1){
-            this.pt_mvt=3;
-            return;
-        }
-        if(this.pt_mvt==3){
-            this.pt_mvt=1;
-            return;
-        }
-    }
-    getPt_mvt(){
-        return this.pt_mvt;
-    }
-    setPos(pos){
-        this.pos=pos;
-    }
-    getPos(){
-        return this.pos;
-    }
-    getValuePos(){
-        return valuePositions[this.pos];
-    }
-    getNum(){
-        return this.num;
-    }
-    getElement(){
-        return document.getElementById('piece_'+this.getColor()+this.getNum());
-    }
-    reset(){
-        this.Wayback=false;
-        this.pos=0;
-    }
-}
-
-// Objets
-let red1=new Pieces(1,0,'red',1);
-let red2=new Pieces(2,0,'red',3);
-let red3=new Pieces(3,0,'red',2);
-let red4=new Pieces(4,0,'red',3);
-let red5=new Pieces(5,0,'red',1);
-
-let yellow1=new Pieces(1,0,'yellow',3);
-let yellow2=new Pieces(2,0,'yellow',1);
-let yellow3=new Pieces(3,0,'yellow',2);
-let yellow4=new Pieces(4,0,'yellow',1);
-let yellow5=new Pieces(5,0,'yellow',3);
 
 // Audio animation (a faire)
 
@@ -638,12 +745,29 @@ function updateTabBoard(p, b){
     }
 }
 
+function waiting(){
+    elementShown("entete","En attente d'un joueur !");
+    red1.getElement().style.pointerEvents= "none";
+    red2.getElement().style.pointerEvents= "none";
+    red3.getElement().style.pointerEvents= "none";
+    red4.getElement().style.pointerEvents= "none";
+    red5.getElement().style.pointerEvents= "none";
+    
+    yellow1.getElement().style.pointerEvents= "none";
+    yellow2.getElement().style.pointerEvents= "none";
+    yellow3.getElement().style.pointerEvents= "none";
+    yellow4.getElement().style.pointerEvents= "none";
+    yellow5.getElement().style.pointerEvents= "none";
+}
+
 // Deroulement du jeu (main)
 function game(){
+    console.log(playerTeam);
     if(turnCounter==-1){
         initializeBoard();
         initTabBoard();
     }
+    
     console.table(tab_board); // Pour les tests a enlever plus tard
     if(turnCounter%2==0){
         Redturn();
@@ -662,5 +786,5 @@ function game(){
     }
 }
 
-game();
+
 
