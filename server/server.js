@@ -19,12 +19,14 @@ app.use(express.static(clientPath));
 const server = http.createServer(app);
 const io = socketio(server);
 
+
 const clientRooms = {};
 
 
 
 
 io.on('connection', client => {
+    
     console.log('Someone connected');
     client.emit('message', 'Hi, you are connected');
     
@@ -37,18 +39,26 @@ io.on('connection', client => {
     function createRoom(code, team){
         let roomName = code;
         clientRooms[client.id] = roomName;
-        client.emit('gameCode',roomName);
+        
+        
         console.log(roomName);
+        console.log(client.id);
         
         client.join(roomName);
+        console.log("L'hote a crée la partie "+clientRooms[client.id]);
         client.team = team;
         client.emit('playerNumber', 1);
         client.emit('init',1);
+
+        io.to(code).emit("testRoom", code);
     }
 
     function handleJoinRoom(gameCode){
+        console.log("Un client essaie de rejoindre la room "+gameCode);
         const room = io.sockets.adapter.rooms[gameCode];
+        console.log(room);
         let allUsers;
+
         if(room){
             allUsers = room.sockets;
             console.log(allUsers);

@@ -7,6 +7,12 @@ socket.on('init', handleInit);
 socket.on('playerNumber', handlePlayerNumber);
 socket.on('unknownGame', handleUnknownGame);
 socket.on('tooManyPlayers', handleFullGame);
+socket.on('testRoom', testRoom);
+
+function testRoom(code){
+    console.log("Un joueur est connecté a la room "+code);
+}
+
 
 function handleInit(){
 
@@ -35,8 +41,7 @@ function popupJoin(){
     */
     
     document.getElementById("join_container").style.display="flex";
-    var code = document.getElementById("code").value;
-    document.getElementById("btn_join").addEventListener('click',function(){verify_code(code);});
+    document.getElementById("btn_join").addEventListener('click',function() { verify_code();});
 }
 function popupCreate(){
     /* fonction qui affiche le menu de creation */
@@ -73,7 +78,7 @@ function makeid() {
    return result;
 }
 //console.log(makeid());
-function verify_code(code){
+function verify_code(){
     /* Verifie le code entre par l'user si le code existe ou pas 
     */
    /*
@@ -87,6 +92,8 @@ function verify_code(code){
     });
     if(!finded)
         document.getElementById("erreur_code").style.visibility="visible";*/
+        var code = document.getElementById("code").value;
+        console.log(code);
         socket.emit('joinRoom', code);
 }
 
