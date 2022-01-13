@@ -76,7 +76,6 @@ function makeid() {
 function verify_code(code){
     /* Verifie le code entre par l'user si le code existe ou pas 
     */
-   console.log("test");
    /*
     let finded=false;
     list_game.forEach(element => {
