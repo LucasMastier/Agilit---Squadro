@@ -760,22 +760,22 @@ function waiting(){
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
 }
-function waitingStart(){
-    /* fonction waiting utilisé au début qui attribue les droits d'interaction au joueur concerné
+function initPieces(team){
+    /* fonction init qui interdit au joueur de touché aux autres pieces que les siennes
     */
-    if(turnCounter%2==1){
-        yellow1.getElement().style.pointerEvents= "auto";
-        yellow2.getElement().style.pointerEvents= "auto";
-        yellow3.getElement().style.pointerEvents= "auto";
-        yellow4.getElement().style.pointerEvents= "auto";
-        yellow5.getElement().style.pointerEvents= "auto";
+    if(team=="red"){
+        yellow1.getElement().style.pointerEvents= "none";
+        yellow2.getElement().style.pointerEvents= "none";
+        yellow3.getElement().style.pointerEvents= "none";
+        yellow4.getElement().style.pointerEvents= "none";
+        yellow5.getElement().style.pointerEvents= "none";
     }
-    if(turnCounter%2==0){
-        red1.getElement().style.pointerEvents= "auto";
-        red2.getElement().style.pointerEvents= "auto";
-        red3.getElement().style.pointerEvents= "auto";
-        red4.getElement().style.pointerEvents= "auto";
-        red5.getElement().style.pointerEvents= "auto";
+    if(team=="yellow"){
+        red1.getElement().style.pointerEvents= "none";
+        red2.getElement().style.pointerEvents= "none";
+        red3.getElement().style.pointerEvents= "none";
+        red4.getElement().style.pointerEvents= "none";
+        red5.getElement().style.pointerEvents= "none";
     }
 }
 function waitingRed(){
@@ -784,12 +784,6 @@ function waitingRed(){
     */
     let turn=`C'est au tour des  <span id='red_player_title'>rouges</span> !`;
     elementShown("entete",turn);
-    red1.getElement().style.pointerEvents= "none";
-    red2.getElement().style.pointerEvents= "none";
-    red3.getElement().style.pointerEvents= "none";
-    red4.getElement().style.pointerEvents= "none";
-    red5.getElement().style.pointerEvents= "none";
-    
     yellow1.getElement().style.pointerEvents= "none";
     yellow2.getElement().style.pointerEvents= "none";
     yellow3.getElement().style.pointerEvents= "none";
@@ -809,12 +803,6 @@ function waitingYellow(){
     red3.getElement().style.pointerEvents= "none";
     red4.getElement().style.pointerEvents= "none";
     red5.getElement().style.pointerEvents= "none";
-    
-    yellow1.getElement().style.pointerEvents= "none";
-    yellow2.getElement().style.pointerEvents= "none";
-    yellow3.getElement().style.pointerEvents= "none";
-    yellow4.getElement().style.pointerEvents= "none";
-    yellow5.getElement().style.pointerEvents= "none";
 }
 // Deroulement du jeu (main)
 function game(){
