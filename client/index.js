@@ -404,8 +404,6 @@ function gameOver(){
     yellow3.getElement().style.pointerEvents= "none";
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
-
-
 }
 
 function scoreUpdate(p){
