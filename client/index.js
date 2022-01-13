@@ -81,6 +81,7 @@ function makeid() {
 function verify_code(){
     /* Verifie le code entre par l'user si le code existe ou pas 
     */
+   /*
     let found=false;
     list_game.forEach(element => {
         if(element==document.getElementById("code").value){
@@ -93,6 +94,9 @@ function verify_code(){
     });
     if(!found)
         document.getElementById("erreur_code").style.visibility="visible";
+    */
+    var code = document.getElementById("code").value;
+    socket.emit('joinRoom', code);
 }
 
 
