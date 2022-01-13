@@ -469,6 +469,7 @@ function checkCollision(p){
             if(p.getPos()+1==5) returnCheckpoint(yellow5);
             return true;
         }
+        if(p.getPos!=0)
         if(p.isOnWayback() && tab_board[p.getPos()-1][p.getNum()]==1){
             if(p.getPos()-1==1) returnCheckpoint(yellow1);
             if(p.getPos()-1==2) returnCheckpoint(yellow2);
