@@ -303,7 +303,8 @@ header{
 
     
 button:hover{
-    border: 3px solid white !important;
+    border: 2px solid white !important;
+    border-radius: 10%;
     transition: 0.2s;
     color: white;
     filter: drop-shadow(0 0 1rem crimson);
@@ -311,5 +312,9 @@ button:hover{
 button:active{
     transform: scale(0.9);
     transition: transform 0.1s;
+}
+
+input:hover{
+    filter: drop-shadow(0 0 1rem crimson);
 }
 
