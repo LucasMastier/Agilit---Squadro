@@ -2,8 +2,9 @@
 var audio = document.getElementById('playeraudio');
 var playpausebutton = document.getElementById('playpausebutton');
 var countplay=0;
-    //play , pause la musique
+
 function playpause(){
+    //play , pause la musique
     if(countplay==0){
         playpausebutton.style.backgroundImage="url(audio/pause.png)";
         audio.play();
@@ -14,11 +15,13 @@ function playpause(){
         countplay=0;
     }
 }
-    //mute , unmute la musique
+
 var countmute=0;
 var muteunmutebutton = document.getElementById('muteunmutebutton');
 function muteunmute(){
+    //mute , unmute la musique
     if(countmute==0){
+
         muteunmutebutton.style.backgroundImage="url(audio/mute.png)";
         audio.volume = 0;
         countmute=1;
@@ -28,12 +31,12 @@ function muteunmute(){
         countmute=0;
     }
 }
-    //gérer le volume
 
 var volumeslider=document.getElementById('volumeslider');
 volumeslider.addEventListener('mousemove', setvolume);
 
 function setvolume(){
+    //gère le volume de l'audio
     if(countmute==0){
         audio.volume= volumeslider.value / 1000;
     }
@@ -362,6 +365,8 @@ function piecePlayed(p){
 }
 
 function changeTurn(p){
+    /*  changement de tour, on bloque les pieces qui ne sont normalement pas jouables
+    */
     if(turnCounter%2==1 && p.getColor()=="yellow"){
         turnCounter++;
         yellow1.getElement().style.pointerEvents= "none";
@@ -429,6 +434,9 @@ function yellowPlay(){
 }
 
 function initializeBoard(){
+    /*  initialise le plateau en mettant remettant les pieces a leur point de depart
+        et definit qui commence
+    */
     turnCounter=Math.floor(Math.random()*2);
     red1.reset();
     red2.reset();
