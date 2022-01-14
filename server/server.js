@@ -1,12 +1,6 @@
-/*const io = require('socket.io')();
-
-io.on('connection', client => {
-    client.emit('init', { data: 'hello world' });
-});
-
-
-io.listen(3000);
-*/
+//
+//Nous avons choisi de laisser les console.log afin de faciliter la compréhension du code uniquement coté serveur (dans la console dans laquelle est lancé le serveur)
+//
 
 const http = require('http');
 const express = require('express');
@@ -18,17 +12,13 @@ app.use(express.static(clientPath));
 
 const server = http.createServer(app);
 const io = socketio(server);
-
-
-const clientRooms = {};
-
-
+const serverPort = 3000;
 
 
 io.on('connection', client => {
-    console.log(client.id+' is connected');
-    client.emit('message', 'Hi, you are connected');
+    console.log(client.id+' est connecté');
     
+    //Gestion des requêtes du client
 
     //Création de partie
     client.on('createRoom', createRoom);
@@ -40,21 +30,27 @@ io.on('connection', client => {
     //Deconnexion
     client.on('disconnect', disconnected);
 
+    //Fonctions executées à la reception des requêtes
+
     function disconnected(){
+        //Prévient le joueur restant dans la partie lorsque l'autre joueur se deconnecte de la partie (ferme l'onglet ou retourne au menu principal)
         io.to(client.code).emit("disconnected");
     }
         
 
     function movePieceRed(piece, gameCode){
-        //On recupère les sockets id
+        //Cette fonction permet de prévenir le joueur jaune qu'une pièce rouge à été jouée
+
         console.log("Entrée dans movePieceRed");
+
+        //On recupère les sockets id
         const clients = io.sockets.adapter.rooms.get(gameCode);
 
         //On parcourt les clients par leur socket id
         for (const clientId of clients ) {
 
             const clientSocket = io.sockets.sockets.get(clientId);
-
+            //On cherche le client correspondant au joueur jaune
             if(clientSocket.team == "jaune"){
                 clientSocket.emit('moveRedPieceRequest', piece);
                 console.log("Envoi de la requete moveRedPieceRequest a "+clientSocket.id);
@@ -63,15 +59,21 @@ io.on('connection', client => {
     }
 
     function movePieceYellow(piece, gameCode){
+        //Cette fonction permet de prévenir le joueur jaune qu'une pièce rouge à été jouée
+
+        console.log("Entrée dans movePieceYellow");
+
         //On recupère les sockets id
-        console.log("Entrée dans movePieceRed");
+        
+
+        //On recupère les sockets id
         const clients = io.sockets.adapter.rooms.get(gameCode);
 
         //On parcourt les clients par leur socket id
         for (const clientId of clients ) {
             
             const clientSocket = io.sockets.sockets.get(clientId);
-
+            //On cherche le client correspondant au joueur rouge
             if(clientSocket.team == "rouge"){
                 clientSocket.emit('moveYellowPieceRequest', piece);
                 console.log("Envoi de la requete moveRedPieceRequest a "+clientSocket.id);
@@ -80,32 +82,28 @@ io.on('connection', client => {
     }
 
     function createRoom(code, team){
+        //Fonction permettant la création de room (on enregistre aussi la team choisie par le joueur au moment de la création de partie)
+
         let roomName = code;
-        clientRooms[client.id] = roomName;
-        
-        
-        console.log(roomName);
-        console.log(client.id);
         
         client.join(roomName);
         console.log("L'hote a crée la partie "+code);
         client.team = team;
-
-        
-        
         
         client.emit('gameName', code);
 
-        io.to(code).emit("testRoom", code);
         console.log(client.id+" est team "+client.team);
         client.code = code;
     }
 
     function generateTurn(){
+        //Permet de générer un nombre aléatoire afin de définir quel joueur commence
         return Math.floor(Math.random()*2);
     }
 
     function handleJoinRoom(gameCode){
+        //Fonction permettant à un client de rejoindre une partie
+
         console.log("Un client essaie de rejoindre la room "+gameCode);
         
         const clients = io.sockets.adapter.rooms.get(gameCode);
@@ -119,16 +117,18 @@ io.on('connection', client => {
 
 
         if(nbClients == null){
+            //Dans ce cas la la partie n'existe pas
             client.emit('unknownGame');
-            console.log("Un joueur essaie de rejoindre une partie vide");
+            console.log(client.id+" essaie de rejoindre une partie vide");
             return;
         }
         
         if(!(nbClients == null)){
             
             if(nbClients > 1){
+                //La partie existe mais est deja pleine
                 client.emit('tooManyPlayers');
-                console.log("Un joueur essaie de rejoindre une partie pleine");
+                console.log(client.id+" essaie de rejoindre une partie pleine");
                 return;
             }
     
@@ -141,29 +141,39 @@ io.on('connection', client => {
                 const clientSocket = io.sockets.sockets.get(clientId);
     
                 if(clientSocket.team === "rouge"){
+
                     console.log(clientSocket.id+" est team "+clientSocket.team);
                     client.team = "jaune";
-                    console.log("Le premier joueur est rouge donc on met le deuxieme joueur jaune ")
+                    console.log("Le premier joueur est rouge donc on met le deuxieme joueur jaune ");
+
                 } else if(clientSocket.team === "jaune"){
+
                     client.team = "rouge";
+                    console.log("Le premier joueur est jaune donc on met le deuxieme joueur rouge ");
+
                 }
            }
-           console.log(client.team);
            
-           clientRooms[client.id] = gameCode;
-           console.log("Un joueur a rejoint la partie "+gameCode+" !");
+           //On ajoute le joueur à la partie
            client.join(gameCode);
-           
+           console.log(client.id+" a rejoint la partie "+gameCode+" !");
     
-           io.to(gameCode).emit("testRoom", "test");
-    
-            
+            //On envoie au client son équipe
             client.emit('playerTeam', client.team);
+
+            //On envoie au client le nom de sa partie
             client.emit('gameName', gameCode);
+
+            //On affiche le plateau de jeu
             client.emit('displayGame');
+
+             //On initialise le premier tour
             io.to(gameCode).emit("handleTurnInit", generateTurn());
-    
+
+            //On lance la partie
             io.to(gameCode).emit("initGame");
+
+            //On attache le code de sa partie au client
             client.code = gameCode;
         }
 
@@ -176,7 +186,6 @@ io.on('connection', client => {
     client.on('chat-message', function (message) {
         console.log('message : ' + message.text);
         io.to(client.code).emit('chat-message', message);
-
     });
 
 
@@ -186,8 +195,8 @@ server.on('error', (err) => {
     console.error('Server error:', err);
 });
 
-server.listen(3000, () => {
-    console.log('RPS started on 3000');
+server.listen(serverPort, () => {
+    console.log('Server en écoute sur le port : '+serverPort);
 });
 
 

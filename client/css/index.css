@@ -38,20 +38,23 @@ header{
     border-top:none;
     border-bottom:none;
 }
+
 .menu{
     display:flex;
     position: absolute;
     flex-direction: column;
     align-items: center;
     width: 700px;
-    background-color: black;
+    background: url(../img/scifibg.jpg);
+    background-size: 1200px 810px;
+    background-position:top;
     border-radius: 10px;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     border: 2px solid white;
-    
 }
+
 h2{
     margin-top: 30px;
     letter-spacing: 1px;
@@ -273,6 +276,7 @@ button:active{
     height:300px;
     color:white;
     border:2px solid white;
+    backdrop-filter: blur(8px);
 }
 
 #form{
@@ -494,10 +498,11 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     flex-direction:column;
     align-items:center;
     width: 80%;
-    height:400px;
+    height:450px;
     background:transparent;
     border: 2px solid white;
     border-radius: 20px;
+    backdrop-filter: blur(8px);
 }
 
 * {
@@ -505,6 +510,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     padding: 0;
     box-sizing: border-box;
 }
+
 
 #score{
     background: transparent;
@@ -518,10 +524,11 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
 }
 #scoretext{
     margin: 5px;
+    color:white;
 }
 
 #red_player_title{
-    color:red;
+    color:#ff4d4d;
     font-family: Netron;
 }
 
@@ -558,6 +565,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     width: 80%;
     color:white;
     border:1px solid white;
+    
 }
 
     /* Style audio */
@@ -677,5 +685,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     border: 3px solid rgba(128,128,128,0.3);
 }
 
-
+#playerTeam{
+    font-family: Netron;
+}
 

@@ -4,15 +4,22 @@ var redScore=[];
 var vainqueur="";
 var yellowScore=[];
 var turnCounter;
-
 var list_game=[];
 var btn_create = document.getElementById("btn_create");
-const socket = io('http://localhost:3000');
+
+//On établit une connexion au port clientPort (ici 3000)
+const clientPort = 3000;
+const socket = io('http://localhost:'+clientPort);
+
 //Equipe du joueur
 let playerTeam;
+
 //Nom de la partie dans lequel le joueur est présent
 let gameCode;
 var playerTeamChat = document.createElement("span");
+
+
+// Class
 
 class Pieces{ 
     constructor(num,pos,color,pt_mvt){
@@ -91,20 +98,12 @@ var tab_board=[
 
 
 
-
-
-// Class
-
-
-
-
 //Server
 
 
 socket.on('playerTeam', handlePlayerTeam);
 socket.on('unknownGame', handleUnknownGame);
 socket.on('tooManyPlayers', handleFullGame);
-socket.on('testRoom', testRoom);
 socket.on('initGame', initGame);
 socket.on('displayGame', displayGame);
 socket.on('gameName', handleGameName);
@@ -113,29 +112,32 @@ socket.on('incrementTurnCounter', handleTurnCounter);
 socket.on('disconnected', handleDisconnect);
 
 function handleDisconnect(){
+    //Permet d'arreter la partie et de définir le joueur restant comme vainqueur
     vainqueur = playerTeam;
     gameOver();
 }
 
 
 function handleTurnCounter(){
+    //Permet d'incrémenter le compteur de tour à la reception d'une requete du serveur
     turnCounter++;
 }
 
 function handleTurnInit(turn){
+    //Permet d'initialiser le premier tour en fonction de la valeur de turnCounter qui est choisie au hasard entre 0 et 1
     turnCounter = turn;
     
     if(turnCounter%2 == 0){
         if(playerTeam === "jaune"){
             waitingRed();
         } else {
-            Redturn();
+            redTurn();
         }
     } else if(turnCounter %2 == 1){
         if(playerTeam === "rouge"){
             waitingYellow();
         } else {
-            Yellowturn();
+            yellowTurn();
         }
     }
 }
@@ -151,11 +153,6 @@ function initGame(){
     initPieces(playerTeam);
 }
 
-function testRoom(code){
-    //debug
-    console.log("Un joueur est connecté a la room "+code);
-}
-
 function displayGame(){
     //Permet de passer du menu principal au plateau de jeu (la partie multijoueur se déroule sur la même
     //page que l'index afin de garder la même socket)
@@ -164,6 +161,13 @@ function displayGame(){
     document.getElementById("playeraudiomenu").pause();
     var messageTeam = "Joueur "+playerTeam+" a rejoint la partie !"
     $('#messages2').append($('<li>').text(messageTeam));
+    var playerTeamDisplay = document.getElementById("playerTeam");
+    if(playerTeam == "rouge"){
+        playerTeamDisplay.style.color = "#ff4d4d";
+    } else if(playerTeam == "jaune"){
+        playerTeamDisplay.style.color = "#fbc531";
+    }
+    playerTeamDisplay.innerHTML = playerTeam;
 }
 
 function handleUnknownGame(){
@@ -187,7 +191,6 @@ function reset(){
 function handlePlayerTeam(team){
     //Affiche une erreur si 
     playerTeam = team;
-    console.log("dans handlePlayerTeam "+playerTeam);
 
     playerTeamChat.innerHTML = ""+strUcFirst(playerTeam);
     playerTeamChat.style.color = "red";
@@ -212,22 +215,22 @@ let y3 = document.getElementById("piece_yellow3");
 let y4 = document.getElementById("piece_yellow4");
 let y5 = document.getElementById("piece_yellow5");
 
-
+//l'indice 0 est la pièce1, l'indice 1 est la pièce 2 etc..
 let red_pieces = [red1,red2,red3,red4,red5];
 let yellow_pieces = [yellow1,yellow2,yellow3,yellow4,yellow5];
-
 
 socket.on('moveRedPieceRequest', handleMoveRed);
 socket.on('moveYellowPieceRequest', handleMoveYellow);
 
 function handleMoveRed(piece){
     //Effectue la mouvement de la pièce en fonction de la requête du serveur
+    //l'argument piece est l'indice de la pièce a bouger
+    //l'indice 0 est la pièce 1, l'indice 1 est la pièce 2 etc..
+    //Cette fonction permet aussi de changer le tour actuel en appelant yellowTurn() et yellowPlay()
     piecePlayed(red_pieces[piece]);
-    Yellowturn();
+    yellowTurn();
     yellowPlay();
     incrementTurnCounter();
-    console.log("Requete moveRedPieceRequest recue "+red_pieces[piece]);
-    console.log(turnCounter);
 
     if(redScore.length==4 || yellowScore.length==4){
         if(redScore.length==4){vainqueur="ROUGES";}
@@ -238,12 +241,14 @@ function handleMoveRed(piece){
 }
 
 function handleMoveYellow(piece){
+    //Effectue la mouvement de la pièce en fonction de la requête du serveur
+    //l'argument piece est l'indice de la pièce a bouger
+    //l'indice 0 est la pièce 1, l'indice 1 est la pièce 2 etc..
+    //Cette fonction permet aussi de changer le tour actuel en appelant Redturn et redPlay
     piecePlayed(yellow_pieces[piece]);
-    Redturn();
+    redTurn();
     redPlay();
     incrementTurnCounter();
-    console.log("Requete moveRedPieceRequest recue "+yellow_pieces[piece]);
-    console.log(turnCounter);
 
     if(redScore.length==4 || yellowScore.length==4){
         if(redScore.length==4){vainqueur="ROUGES";}
@@ -254,83 +259,76 @@ function handleMoveYellow(piece){
 }
 
 function incrementTurnCounter(){
+    //Incremente le compteur de tour et envoie une requete au serveur pour dire a l'autre joueur d'incrémenter son compteur également
     turnCounter++;
     socket.emit('handleIncrementTurnCounter');
 }
 
-
+//
 //Envoi de mouvement de pièces ROUGES
+//
+
 r1.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 0, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingYellow();
-    console.log(turnCounter);
  });
 
 r2.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 1, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingYellow();
-    console.log(turnCounter);
 });
 
 r3.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 2, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingYellow();
  });
 
 r4.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 3, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingYellow();
 });
 
 r5.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 4, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingYellow();
  });
 
 
- //Envoi de mouvements de pieces JAUNES
+//
+//Envoi de mouvement de pièces JAUNES
+//
+
  y1.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 0, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingRed();
-    console.log(turnCounter);
  });
 
 y2.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 1, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingRed();
 });
 
 y3.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 2, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingRed();
  });
 
 y4.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 3, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingRed();
 });
 
 y5.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 4, gameCode);
-    console.log("Envoi de la requete de mouvement au serveur");
     incrementTurnCounter();
     waitingRed();
  });
@@ -338,7 +336,7 @@ y5.addEventListener("click", function(){
 
 
  function piecePlayed(p){
-    /*  piece jouer par un joueur permet de passer l'info a l'autre joueur 
+    /*  Piece jouée par un joueur permet de passer l'info a l'autre joueur 
         pour actualiser son plateau 
     */
     let pm=p.getPt_mvt();
@@ -400,7 +398,6 @@ function createRoom(code){
     /* creation de la partie */
     var team=document.querySelector('input[name="r"]:checked').value;
     playerTeam = team;
-    console.log(team);
     list_game.push(code);
     document.getElementById("main_menu").style.display="none";
     document.getElementById("multiplayer-game").style.display="block";
@@ -409,6 +406,13 @@ function createRoom(code){
     socket.emit('createRoom', code, team);
     waiting();
     $('#messages2').append($('<li>').text("Joueur "+playerTeam+" a rejoint la partie !"));
+    var playerTeamDisplay = document.getElementById("playerTeam");
+    if(playerTeam == "rouge"){
+        playerTeamDisplay.style.color = "#ff4d4d";
+    } else if(playerTeam == "jaune"){
+        playerTeamDisplay.style.color = "#fbc531";
+    }
+    playerTeamDisplay.innerHTML = playerTeam;
 }
 
 function makeid() {
@@ -427,7 +431,7 @@ function makeid() {
    });
    return result;
 }
-//console.log(makeid());
+
 function verify_code(){
     // Verifie le code entre par l'user si le code existe ou pas 
     var code = document.getElementById("code").value;
@@ -533,7 +537,7 @@ function elementShown(id, text){
     let elem=document.getElementById(id);
     elem.innerHTML=text;
 }
-function Redturn(){
+function redTurn(){
     /*  Indique que c'est au tour des rouges et met à jour 
         le plateau pour que seules les pieces rouges puissent bouger
     */
@@ -545,10 +549,9 @@ function Redturn(){
     red3.getElement().style.pointerEvents= "auto";
     red4.getElement().style.pointerEvents= "auto";
     red5.getElement().style.pointerEvents= "auto";
-    console.log("REDTURN");
 }
 
-function Yellowturn(){
+function yellowTurn(){
     /*  Indique que c'est au tour des jaunes et met à jour 
         le plateau pour que seules les pieces jaunes puissent bouger
     */
@@ -560,7 +563,6 @@ function Yellowturn(){
     yellow3.getElement().style.pointerEvents= "auto";
     yellow4.getElement().style.pointerEvents= "auto";
     yellow5.getElement().style.pointerEvents= "auto";
-    console.log("YELLOWTURN");
 }
 
 function gameOver(){
@@ -727,12 +729,10 @@ function piecePlayed(p){
 
 function changeTurn(p){
     if(turnCounter%2==1 && p.getColor()=="yellow"){
-        console.log("WaitingRed");
         turnCounter++;
         waitingRed();
     }
     if(turnCounter%2==0 && p.getColor()=="red"){
-        console.log("WaitingYellow");
         turnCounter++;
         waitingYellow();
     }
@@ -954,7 +954,6 @@ function waitingRed(){
     yellow3.getElement().style.pointerEvents= "none";
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
-    console.log("WAITINGRED");
 }
 
 function waitingYellow(){
@@ -969,28 +968,23 @@ function waitingYellow(){
     red3.getElement().style.pointerEvents= "none";
     red4.getElement().style.pointerEvents= "none";
     red5.getElement().style.pointerEvents= "none";
-    console.log("WAITINGYELLOW");
 }
 // Deroulement du jeu (main)
 function game(){
-    console.log(playerTeam);
     if(turnCounter==-1){
         initializeBoard();
         initTabBoard();
     }
     
-    console.table(tab_board); // Pour les tests a enlever plus tard
     if(turnCounter%2==0 && playerTeam === "rouge"){
         
-        Redturn();
+        redTurn();
         redPlay();
-        console.log("game redturn");
     }
     if(turnCounter%2==1 && playerTeam === "jaune"){
         
-        Yellowturn();
+        yellowTurn();
         yellowPlay();
-        console.log("game yellowturn");
         
     }
 
@@ -1012,7 +1006,6 @@ function waitingBis(playerTeam){
         red3.getElement().style.pointerEvents= "none";
         red4.getElement().style.pointerEvents= "none";
         red5.getElement().style.pointerEvents= "none";
-        console.log("WAITINGYELLOW");
     } else {
         let turn=`C'est au tour des  <span id='red_player_title'>rouges</span> !`;
         elementShown("entete",turn);
@@ -1021,7 +1014,6 @@ function waitingBis(playerTeam){
         yellow3.getElement().style.pointerEvents= "none";
         yellow4.getElement().style.pointerEvents= "none";
         yellow5.getElement().style.pointerEvents= "none";
-        console.log("WAITINGRED");
     }
         
 }
@@ -1031,6 +1023,7 @@ function waitingBis(playerTeam){
 function strUcFirst(a){return (a+'').charAt(0).toUpperCase()+a.substr(1);}
 
 
+//Envoi de message à l'appui du bouton envoyer
 
 $('form').submit(function(e) {
     e.preventDefault(); // On évite le recharchement de la page lors de la validation du formulaire
@@ -1048,8 +1041,9 @@ $('form').submit(function(e) {
     
 });
 
+//Réception de message
+
 socket.on('chat-message', function (message) {
-    console.log(message);
     $('#messages2').append($('<li>').text(message.text));
 });
 
