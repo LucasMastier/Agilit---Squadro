@@ -375,7 +375,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     width: 700px;
     border-radius: 20px;
     background: url(../img/boardv3.png);
-    
+    margin-left: 300px;
 }
 .boardfin{
     display: none;
@@ -565,6 +565,15 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     align-items: center;
     width: 10%;
     padding-left: 10px;
+    position:absolute; 
+    bottom:0;
+}
+#audiogame{
+    align-items: center;
+    width: 10%;
+    padding-left: 10px;
+    position:absolute; 
+    bottom:0;
 }
 #playpausebutton{
     padding: 0;
@@ -572,8 +581,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     background: inherit;
     cursor: pointer;
     outline: none;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     margin: 20px 2.5% 20px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
@@ -586,8 +595,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     background: inherit;
     cursor: pointer;
     outline: none;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     margin: 20px 2.5% 20px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
@@ -599,8 +608,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     background: inherit;
     cursor: pointer;
     outline: none;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     margin: 20px 2.5% 20px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
@@ -612,14 +621,17 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     background: inherit;
     cursor: pointer;
     outline: none;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     margin: 20px 2.5% 20px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url(../audio/son.png);
 }
 
+#volumeslidermenu{
+    width: 110px;
+}
 
 #main-menu-button{
     width:200px;
