@@ -49,6 +49,16 @@
             </button>
         </div>
     </div>
+    <audio id='playeraudiomenu' loop>
+        <source src="audio/musicmenu.mp3" type="audio/mp3" />
+        Votre navigateur ne prend pas en charge cet élement audio.
+    </audio>
+    <div id="audio"> 
+        <button id='playpausebuttonmenu' onclick="playpausemenu()"></button> 
+        <button id='muteunmutebuttonmenu'onclick="muteunmutemenu()"></button> 
+        <input type="range" id="volumeslidermenu" min="0" max="100" value="50" step="1">
+        <script>document.getElementById('playeraudiomenu').volume=50/1000</script>
+    </div>
 </div>
     <div id="multiplayer-game">
         <header id="entete" role="header">

@@ -431,8 +431,11 @@ function verify_code(){
 
 //gestion de la musique
 var audio = document.getElementById('playeraudio');
+var audiomenu = document.getElementById('playeraudiomenu');
 var playpausebutton = document.getElementById('playpausebutton');
+var playpausebuttonmenu = document.getElementById('playpausebuttonmenu');
 var countplay=0;
+var countplaymenu=0;
     //play , pause la musique
 function playpause(){
     if(countplay==0){
@@ -445,10 +448,23 @@ function playpause(){
         countplay=0;
     }
 }
+function playpausemenu(){
+    if(countplaymenu==0){
+        playpausebuttonmenu.style.backgroundImage="url(audio/pause.png)";
+        audiomenu.play();
+        countplaymenu=1;
+    }else{
+        playpausebuttonmenu.style.backgroundImage="url(audio/play.png)";
+        audiomenu.pause();
+        countplaymenu=0;
+    }
+}
     //mute , unmute la musique
 var countmute=0;
+var countmutemenu=0;
 var currentvolume=0;
 var muteunmutebutton = document.getElementById('muteunmutebutton');
+var muteunmutebuttonmenu = document.getElementById('muteunmutebuttonmenu');
 function muteunmute(){
     if(countmute==0){
         muteunmutebutton.style.backgroundImage="url(audio/mute.png)";
@@ -460,14 +476,32 @@ function muteunmute(){
         countmute=0;
     }
 }
+function muteunmutemenu(){
+    if(countmutemenu==0){
+        muteunmutebuttonmenu.style.backgroundImage="url(audio/mute.png)";
+        audiomenu.volume = 0;
+        countmutemenu=1;
+    }else{
+        muteunmutebuttonmenu.style.backgroundImage="url(audio/son.png)";
+        audiomenu.volume=volumeslidermenu.value / 1000;
+        countmutemenu=0;
+    }
+}
     //gérer le volume
 
 var volumeslider=document.getElementById('volumeslider');
+var volumeslidermenu=document.getElementById('volumeslidermenu');
 volumeslider.addEventListener('mousemove', setvolume);
+volumeslidermenu.addEventListener('mousemove', setvolumemenu);
 
 function setvolume(){
     if(countmute==0){
         audio.volume= volumeslider.value / 1000;
+    }
+}
+function setvolumemenu(){
+    if(countmutemenu==0){
+        audiomenu.volume= volumeslidermenu.value / 1000;
     }
 }
 
