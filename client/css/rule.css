@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
 
+@font-face {
+    font-family: Netron;
+    src: url(Netron.ttf);
+  }
+
+
 *{
     margin: 0;
     padding: 0;
@@ -8,36 +14,89 @@
     font-family: 'Roboto';
 }
 body{
-    background: url(../img/background.png)
+    background: url(../img/scifibg.jpg);
+    background-size: 1920px 1080px;
 }
 header{
-    background: #4b4b4b;
+    background: transparent;
     color: white;
-    width: 100%;
+    width: 50%;
     height: 60px;
-    font-weight: 900;
+    font-weight: 700;
     font-size: 35px;
+    margin:auto;
     text-align: center;
     padding-top: 10px;
-    letter-spacing: 2px;
+    border:1px solid white;
+    border-radius: 20px;
+    font-family: Netron;
+    border-top:none;
+    border-bottom:none;
 }
 .container{
     display: block;
     position: absolute;
-    background: #fff;
+    background: transparent;
     border-radius: 10px;
     margin: 30px 60px 30px 60px;
     padding: 20px 40px 20px 40px;
+    color:white;
 }
 h1{
-    text-decoration: underline;
+    font-family: "Netron";
+    padding-bottom:15px;
+    padding-left:500px;
 }
 h3{
     margin: 10px 0px 10px 0px;
     font-weight: 700;
+    
 }
 p{
     font-family: 'Lato';
     font-weight: 500;
     font-size: 20px;
+}
+
+button:hover{
+    border: 2px solid white !important;
+    border-radius: 10%;
+    transition: 0.2s;
+    color: white;
+    filter: drop-shadow(0 0 1rem crimson);
+}
+button:active{
+    transform: scale(0.9);
+    transition: transform 0.1s;
+}
+
+
+#main-menu-button{
+    width:200px;
+    height:50px;
+    font-size: 16px !important;
+    padding:0px;
+    background: rgb(63,94,251);
+    background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#fc466b",GradientType=1);
+    background-size: 500px 400px;
+    backdrop-filter: blur(10px);
+    
+    text-align: center;
+    
+    border-radius: 10px;
+    
+    font-size: 20px;
+    cursor: pointer;
+    color:white;
+    outline: none;
+    border: 3px solid rgba(128,128,128,0.3);
+    margin-bottom:20px;
+}
+
+.container_title{
+    display:flex;
+    
 }

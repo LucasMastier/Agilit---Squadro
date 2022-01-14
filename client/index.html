@@ -37,12 +37,12 @@
             <div class="select_team">
                 <div class="choiceTeam">Choissisez une couleur </div>
                 <div class="selection">
-                    <input type="radio" name="r" id=redTeam value="rouge" checked> ROUGE
-                    <input type="radio" name="r" id=yellowTeam value="jaune"> JAUNE
+                    <input type="radio" name="r" id="redTeam" value="rouge" checked><span id="redTeamTitle"> ROUGE</span>
+                    <input type="radio" name="r" id="yellowTeam" value="jaune"><span id="yellowTeamTitle"> JAUNE </span>
                 </div>
             </div>
             <div id="code_generated"></div>
-            <button type="submit" id=btn_create class="popup_submit">Créer</button>
+            <button type="submit" id="btn_create" class="popup_submit">Créer</button>
             <button class="local" onclick="window.location.href='index.html';">
                 Retour
             </button>
@@ -67,14 +67,14 @@
                     Le premier joueur à faire revenir 4 pièces gagne la partie 
                 </span></div>
                 <div id="player1">
-                    Joueur Rouge <br>
+                    Joueur <span id='red_player_title'>Rouge</span><br>
                     <span class="dot" id="red1"></span>
                     <span class="dot" id="red2"></span>
                     <span class="dot" id="red3"></span>
                     <span class="dot" id="red4"></span>
                 </div>
                 <div id="player2">
-                    Joueur Jaune <br>
+                    Joueur <span id='yellow_player_title'>Jaune</span><br>
                     <span class="dot" id="yellow1"></span>
                     <span class="dot" id="yellow2"></span>
                     <span class="dot" id="yellow3"></span>
@@ -101,9 +101,6 @@
                     <div class="piece yellow" id="piece_yellow5"></div>
                 </div>
                 <div class='boardfin' id="boardfin">
-                    <button class="rejouer" onclick="window.location.href='game.html';">
-                        Rejouer
-                    </button>
                     <button class="return_menu" onclick="window.location.href='index.html';">
                         Menu Principal
                     </button>

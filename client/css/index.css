@@ -6,6 +6,11 @@
     src: url(GameOfSquids.ttf);
   }
 
+  @font-face {
+    font-family: Netron;
+    src: url(Netron.ttf);
+  }
+
 *{
     margin: 0;
     padding: 0;
@@ -61,16 +66,20 @@ section#chat #messages2 li:nth-child(odd) {
 
   
 header{
-    background: #4b4b4b;
+    background: transparent;
     color: white;
-    width: 100%;
+    width: 50%;
     height: 60px;
-    font-weight:900;
+    font-weight: 700;
     font-size: 35px;
+    margin:auto;
     text-align: center;
     padding-top: 10px;
-    letter-spacing: 2px;
-    font-family: 'Roboto';
+    border:1px solid white;
+    border-radius: 20px;
+    font-family: Netron;
+    border-top:none;
+    border-bottom:none;
 }
 .menu{
     display:flex;
@@ -114,15 +123,53 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     border: 3px solid rgba(128,128,128,0.3);
 }
 
+#btn_create{
+    background: rgb(63,94,251);
+background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#fc466b",GradientType=1);
+    background-size: 500px 400px;
+    backdrop-filter: blur(10px);
+    width: 50%;
+    text-align: center;
+    padding: 1em;
+    border-radius: 10px;
+    margin: 1em;
+    font-size: 20px;
+    cursor: pointer;
+    color:white;
+    outline: none;
+    border: 3px solid rgba(128,128,128,0.3);
+}
+
+#btn_join{
+    background: rgb(63,94,251);
+background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#fc466b",GradientType=1);
+    background-size: 500px 400px;
+    backdrop-filter: blur(10px);
+    width: 50%;
+    text-align: center;
+    padding: 1em;
+    border-radius: 10px;
+    margin: 1em;
+    font-size: 20px;
+    cursor: pointer;
+    color:white;
+    outline: none;
+    border: 3px solid rgba(128,128,128,0.3);
+}
+
 button:hover{
     
-    border: 3px solid white ;
+    border: 3px solid white !important;
     transition: 0.2s;
     color: white;
     
     filter: drop-shadow(0 0 1rem crimson);
-    
-    
     
 }
 button:active{
@@ -158,6 +205,7 @@ button:active{
     margin: 1em;
     box-shadow: 1px 1px 22px #000;
     font-size: 20px;
+    outline:none;
 }
 .popup_submit{
     background: #fff;
@@ -182,11 +230,11 @@ button:active{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    border: 3px solid #000;
-    background-color: rgba(97, 89, 89, 0.7);
+    border: 3px solid white;
+    background-color: rgba(0, 0, 0, 0.719);
 }
 .select_team{
-    background: #fff;
+    background: black;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,7 +243,9 @@ button:active{
     padding: 1em;
     border-radius: 10px;
     margin: 1em;
-    box-shadow: 1px 1px 22px #000;
+    border: 3px solid white;
+    color:white;
+    
 }
 .choiceTeam{
     width:100%;
@@ -207,13 +257,25 @@ button:active{
     text-align: center;
     justify-content: space-between;
     margin: 1em;
+    width:80%;
 }
-.redTeam{
+#redTeam{
     color:#ff4d4d;
 }
-.yellowTeam{
+#yellowTeam{
     color:#fbc531;
 }
+
+#yellowTeamTitle{
+    color:#fbc531;
+    font-family: "Netron";
+}
+
+#redTeamTitle{
+    color:#ff4d4d;
+    font-family: "Netron";
+}
+
 #code_generated{
     background: #fff;
     display: block;
@@ -370,12 +432,15 @@ button:active{
 }
 
 #right_side{
-    display: block;
+    display: flex;
     flex-direction:column;
     align-items:center;
-    width: 20%;
-    background:#fff;
-    background-color: rgb(255, 255, 255,0.7);
+    width: 30%;
+    height:400px;
+    background:transparent;
+    border: 2px solid white;
+    border-radius: 20px;
+    margin-right:100px;
 }
 
 * {
@@ -385,17 +450,27 @@ button:active{
 }
 
 #score{
-    background: white;
+    background: transparent;
     width: 60%;
     margin: 5%;
     text-align: center;
     border-radius: 5px;
-    border: 1px solid black;
-    box-shadow: 10px 5px 10px black;
+    border: 1px solid white;
     padding: 10px;
+    color:white;
 }
 #scoretext{
     margin: 5px;
+}
+
+#red_player_title{
+    color:red;
+    font-family: Netron;
+}
+
+#yellow_player_title{
+    color:#fbc531;
+    font-family: Netron;
 }
 
 .dot{
@@ -403,27 +478,29 @@ button:active{
     width: 25px;
     border-radius: 50%;
     margin-top: 10px;
-    border:1px solid black;
+    border:1px solid white;
     display: inline-block;
 
 }
 #player1{
     display: block;
-    background: white;
+    background: transparent;
     border-radius: 20px;
     margin-top: 20px;
     padding: 1em;
     width: 80%;
-    box-shadow: 1px 1px 12px #ff4d4d;
+    color:white;
+    border:1px solid white;
 }
 #player2{
     display: block;
-    background: white;
+    background: transparent;
     border-radius: 20px;
     margin-top: 20px;
     padding: 1em;
     width: 80%;
-    box-shadow: 1px 1px 12px #fbc531;
+    color:white;
+    border:1px solid white;
 }
 
     /* Style audio */
@@ -466,5 +543,24 @@ button:active{
     height:50px;
     font-size: 16px !important;
     padding:0px;
+    background: rgb(63,94,251);
+    background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#fc466b",GradientType=1);
+    background-size: 500px 400px;
+    backdrop-filter: blur(10px);
+    
+    text-align: center;
+    
+    border-radius: 10px;
+    
+    font-size: 20px;
+    cursor: pointer;
+    color:white;
+    outline: none;
+    border: 3px solid rgba(128,128,128,0.3);
 }
+
+
 
