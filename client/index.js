@@ -121,8 +121,12 @@ socket.on('displayGame', displayGame);
 socket.on('gameName', handleGameName);
 socket.on('handleTurnInit',handleTurnInit);
 socket.on('incrementTurnCounter', handleTurnCounter);
+socket.on('disconnected', handleDisconnect);
 
-
+function handleDisconnect(){
+    vainqueur = playerTeam;
+    gameOver();
+}
 
 
 function handleTurnCounter(){
@@ -565,7 +569,6 @@ function Yellowturn(){
 }
 
 function gameOver(){
-    console.log(vainqueur);
     /*  Indique la fin de partie */
     elementShown("entete",'Partie terminée ! Victoire des '+vainqueur);
     document.getElementById("boardfin").style.display="flex";
