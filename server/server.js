@@ -175,7 +175,7 @@ io.on('connection', client => {
      */
     client.on('chat-message', function (message) {
         console.log('message : ' + message.text);
-        io.emit('chat-message', message);
+        io.to(client.code).emit('chat-message', message);
 
     });
 

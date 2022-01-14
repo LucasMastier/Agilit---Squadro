@@ -162,6 +162,9 @@ function displayGame(){
     document.getElementById("main_menu").style.display="none";
     document.getElementById("multiplayer-game").style.display="block";
     document.getElementById("playeraudiomenu").pause();
+    var messageTeam = "Joueur "+playerTeam+" a rejoint la partie !"
+    $('#messages2').append($('<li>').text(messageTeam));
+    socket.emit('chat-message', messageTeam);
 }
 
 function handleUnknownGame(){
@@ -406,6 +409,7 @@ function createRoom(code){
     //le mettre sur une partie ou en attente 
     socket.emit('createRoom', code, team);
     waiting();
+    $('#messages2').append($('<li>').text("Joueur "+playerTeam+" a rejoint la partie !"));
 }
 
 function makeid() {
