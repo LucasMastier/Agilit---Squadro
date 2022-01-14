@@ -163,6 +163,7 @@ function displayGame(){
     //page que l'index afin de garder la même socket)
     document.getElementById("main_menu").style.display="none";
     document.getElementById("multiplayer-game").style.display="block";
+    document.getElementById("playeraudiomenu").pause();
 }
 
 function handleUnknownGame(){
@@ -398,6 +399,7 @@ function createRoom(code){
     list_game.push(code);
     document.getElementById("main_menu").style.display="none";
     document.getElementById("multiplayer-game").style.display="block";
+    document.getElementById("playeraudiomenu").pause();
     //le mettre sur une partie ou en attente 
     socket.emit('createRoom', code, team);
     waiting();
