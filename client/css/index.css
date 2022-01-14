@@ -193,10 +193,10 @@ button:active{
     left: 50%;
     transform: translate(-50%,-50%);
     border: 3px solid #000;
-    background-color: rgba(97, 89, 89, 0.7);
+    background-color: rgba(32, 32, 32, 0.877);
 }
 .erreur_code{
-    color:#B22222;
+    color:#ff0000;
 }
 #erreur_codePleine{
     visibility:hidden;

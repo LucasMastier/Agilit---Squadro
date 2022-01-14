@@ -26,6 +26,8 @@ var tab_board=[
 
 ];
 
+//Chat
+
 $('form').submit(function(e) {
     e.preventDefault(); // On évite le recharchement de la page lors de la validation du formulaire
     // On crée notre objet JSON correspondant à notre message
@@ -120,6 +122,9 @@ socket.on('gameName', handleGameName);
 socket.on('handleTurnInit',handleTurnInit);
 socket.on('incrementTurnCounter', handleTurnCounter);
 
+
+
+
 function handleTurnCounter(){
     turnCounter++;
 }
@@ -167,13 +172,15 @@ function displayGame(){
 }
 
 function handleUnknownGame(){
-    //Affiche une erreur si la partie recherchée n'éxiste pas
-    alert("La partie n'existe pas");
+    //Affiche une erreur si la partie recherchée n'existe pas
+    document.getElementById("erreur_codePleine").style.visibility = "hidden";
+    document.getElementById("erreur_codeExiste").style.visibility = "visible";
 }
 
 function handleFullGame(){
     //Affiche une erreur si la partie est complète
-    alert("La partie est déjà complète");
+    document.getElementById("erreur_codeExiste").style.visibility = "hidden";
+    document.getElementById("erreur_codePleine").style.visibility = "visible";
 }
 
 function reset(){
