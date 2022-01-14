@@ -102,55 +102,64 @@ io.on('connection', client => {
         console.log("Un client essaie de rejoindre la room "+gameCode);
         
         const clients = io.sockets.adapter.rooms.get(gameCode);
+        var nbClients = null;
+        if(clients){
+            nbClients = clients.size;
+        }
         
-        const nbClients = clients.size;
         console.log(clients);
         console.log("Il y a "+nbClients+" clients dans la partie");
-        
 
 
-        if(nbClients === 0){
+        if(nbClients == null){
             client.emit('unknownGame');
             console.log("Un joueur essaie de rejoindre une partie vide");
             return;
-        } else if(nbClients > 1){
-            client.emit('tooManyPlayers');
-            console.log("Un joueur essaie de rejoindre une partie pleine");
-            return;
+        }
+        
+        if(!(nbClients == null)){
+            
+            if(nbClients > 1){
+                client.emit('tooManyPlayers');
+                console.log("Un joueur essaie de rejoindre une partie pleine");
+                return;
+            }
+    
+            
+    
+    
+            //On définit la team du joueur qui rejoint en fonction de la team du joueur deja présent
+            for (const clientId of clients ) {
+                
+                const clientSocket = io.sockets.sockets.get(clientId);
+    
+                if(clientSocket.team === "rouge"){
+                    console.log(clientSocket.id+" est team "+clientSocket.team);
+                    client.team = "jaune";
+                    console.log("Le premier joueur est rouge donc on met le deuxieme joueur jaune ")
+                } else if(clientSocket.team === "jaune"){
+                    client.team = "rouge";
+                }
+           }
+           console.log(client.team);
+           
+           clientRooms[client.id] = gameCode;
+           console.log("Un joueur a rejoint la partie "+gameCode+" !");
+           client.join(gameCode);
+           
+    
+           io.to(gameCode).emit("testRoom", "test");
+    
+            
+            client.emit('playerTeam', client.team);
+            client.emit('gameName', gameCode);
+            client.emit('displayGame');
+            io.to(gameCode).emit("handleTurnInit", generateTurn());
+    
+            io.to(gameCode).emit("initGame");
         }
 
         
-
-
-        //On définit la team du joueur qui rejoint en fonction de la team du joueur deja présent
-        for (const clientId of clients ) {
-            
-            const clientSocket = io.sockets.sockets.get(clientId);
-
-            if(clientSocket.team === "rouge"){
-                console.log(clientSocket.id+" est team "+clientSocket.team);
-                client.team = "jaune";
-                console.log("Le premier joueur est rouge donc on met le deuxieme joueur jaune ")
-            } else if(clientSocket.team === "jaune"){
-                client.team = "rouge";
-            }
-       }
-       console.log(client.team);
-       
-       clientRooms[client.id] = gameCode;
-       console.log("Un joueur a rejoint la partie "+gameCode+" !");
-       client.join(gameCode);
-       
-
-       io.to(gameCode).emit("testRoom", "test");
-
-        
-        client.emit('playerTeam', client.team);
-        client.emit('gameName', gameCode);
-        client.emit('displayGame');
-        io.to(gameCode).emit("handleTurnInit", generateTurn());
-
-        io.to(gameCode).emit("initGame");
         
     }
     /**
