@@ -362,6 +362,8 @@ function piecePlayed(p){
 }
 
 function changeTurn(p){
+    /*  changement de tour, on bloque les pieces qui ne sont normalement pas jouables
+    */
     if(turnCounter%2==1 && p.getColor()=="yellow"){
         turnCounter++;
         yellow1.getElement().style.pointerEvents= "none";
@@ -429,6 +431,9 @@ function yellowPlay(){
 }
 
 function initializeBoard(){
+    /*  initialise le plateau en mettant remettant les pieces a leur point de depart
+        et definit qui commence
+    */
     turnCounter=Math.floor(Math.random()*2);
     red1.reset();
     red2.reset();
