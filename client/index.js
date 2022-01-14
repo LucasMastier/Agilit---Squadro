@@ -12,41 +12,8 @@ const socket = io('http://localhost:3000');
 let playerTeam;
 //Nom de la partie dans lequel le joueur est présent
 let gameCode;
+var playerTeamChat = document.createElement("span");
 
-//Script principal
-
-var tab_board=[
-    [0,1,1,1,1,1,0],
-    [1,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0],
-
-];
-
-//Chat
-
-$('form').submit(function(e) {
-    e.preventDefault(); // On évite le recharchement de la page lors de la validation du formulaire
-    // On crée notre objet JSON correspondant à notre message
-    var message = {
-        text : $('#m').val()
-    }
-    $('#m').val(''); // On vide le champ texte
-    if (message.text.trim().length !== 0) { // Gestion message vide
-        socket.emit('chat-message', message);
-    }
-    $('#chat input').focus(); // Focus sur le champ du message
-});
-
-socket.on('chat-message', function (message) {
-    console.log(message);
-    $('#messages2').append($('<li>').text(message.text));
-});
-
-// Class
 class Pieces{ 
     constructor(num,pos,color,pt_mvt){
         this.num=num;
@@ -108,6 +75,28 @@ let yellow2=new Pieces(2,0,'yellow',1);
 let yellow3=new Pieces(3,0,'yellow',2);
 let yellow4=new Pieces(4,0,'yellow',1);
 let yellow5=new Pieces(5,0,'yellow',3);
+
+//Script principal
+
+var tab_board=[
+    [0,1,1,1,1,1,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [1,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0],
+
+];
+
+
+
+
+
+// Class
+
+
+
 
 //Server
 
@@ -197,6 +186,9 @@ function handlePlayerTeam(team){
     //Affiche une erreur si 
     playerTeam = team;
     console.log("dans handlePlayerTeam "+playerTeam);
+
+    playerTeamChat.innerHTML = ""+strUcFirst(playerTeam);
+    playerTeamChat.style.color = "red";
 }
 
 
@@ -1031,5 +1023,28 @@ function waitingBis(playerTeam){
         
 }
 
+
+//Chat
+function strUcFirst(a){return (a+'').charAt(0).toUpperCase()+a.substr(1);}
+
+
+
+$('form').submit(function(e) {
+    e.preventDefault(); // On évite le recharchement de la page lors de la validation du formulaire
+    // On crée notre objet JSON correspondant à notre message
+    var message = {
+        text : strUcFirst(playerTeam)+" : "+$('#m').val()
+    }
+    $('#m').val(''); // On vide le champ texte
+    if (message.text.trim().length !== 0) { // Gestion message vide
+        socket.emit('chat-message', message);
+    }
+    $('#chat input').focus(); // Focus sur le champ du message
+});
+
+socket.on('chat-message', function (message) {
+    console.log(message);
+    $('#messages2').append($('<li>').text(message.text));
+});
 
 

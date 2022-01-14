@@ -254,17 +254,30 @@ button:active{
     font-size: 20px;
 }
 
+#right_side_container{
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    width: 30%;
+}
+
 #chatmessage2{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     background: transparent;
-    border-radius: 5px;
+    border-radius: 20px;
     margin:5%;
     padding: 10px;
-    width: 70%;
-    height:400px;
+    width:80%;
+    height:300px;
     color:white;
-    border:1px solid white;
+    border:2px solid white;
+}
+
+#form{
+    display:flex;
+    justify-content: space-between;
 }
 
 #chat form {
@@ -303,6 +316,32 @@ button:active{
     background: #eee;
 }
 
+#m{
+    width:100%;
+    background:transparent;
+    border: 1px solid white;
+    color:white;
+    outline:none;
+    border-radius:5px;
+    padding:3px;
+    margin-right:4px;
+}
+
+#send-button{
+    background: rgb(63,94,251);
+background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#fc466b",GradientType=1);
+    background-size: 500px 400px;
+    backdrop-filter: blur(10px);
+    color:white;
+    outline:none;
+    border: 3px solid rgba(128,128,128,0.3);
+    width:100px;
+    border-radius: 5px;
+    padding:3px;
+}
 
 /*#main_menu{
     display:"block";
@@ -454,12 +493,11 @@ button:active{
     display: flex;
     flex-direction:column;
     align-items:center;
-    width: 30%;
+    width: 80%;
     height:400px;
     background:transparent;
     border: 2px solid white;
     border-radius: 20px;
-    margin-right:100px;
 }
 
 * {
