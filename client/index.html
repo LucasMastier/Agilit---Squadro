@@ -49,10 +49,11 @@
             </button>
         </div>
     </div>
-    <audio id='playeraudiomenu' loop>
+    <audio id='playeraudiomenu' loop >
         <source src="audio/musicmenu.mp3" type="audio/mp3" />
         Votre navigateur ne prend pas en charge cet élement audio.
     </audio>
+    <script>document.getElementById("playeraudiomenu").play();</script>
     <div id="audio"> 
         <button class='audiobutton' id='playpausebuttonmenu' onclick="playpausemenu()"></button> 
         <button class='audiobutton' id='muteunmutebuttonmenu'onclick="muteunmutemenu()"></button> 
@@ -117,17 +118,17 @@
                     </button>
                 </div>
             </div>
-            <audio id='playeraudio' loop>
-                <source src="audio/musicingame.mp3" type="audio/mp3" />
-                Votre navigateur ne prend pas en charge cet élement audio.
-            </audio>
-            <div id="audio"> 
-                <button class='audiobutton' id='playpausebutton' onclick="playpause()"></button> 
-                <button class='audiobutton' id='muteunmutebutton'onclick="muteunmute()"></button> 
-                <input type="range" id="volumeslider" min="0" max="100" value="50" step="1">
-                <script>document.getElementById('playeraudio').volume=50/1000</script>
-            </div>
     
+        </div>
+        <audio id='playeraudio' loop>
+            <source src="audio/musicingame.mp3" type="audio/mp3" />
+            Votre navigateur ne prend pas en charge cet élement audio.
+        </audio>
+        <div id="audiogame"> 
+            <button class='audiobutton' id='playpausebutton' onclick="playpause()"></button> 
+            <button class='audiobutton' id='muteunmutebutton'onclick="muteunmute()"></button> 
+            <input type="range" id="volumeslider" min="0" max="100" value="50" step="1">
+            <script>document.getElementById('playeraudio').volume=50/1000</script>
         </div>
     </div>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
