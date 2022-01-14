@@ -544,6 +544,32 @@ button:active{
     background-repeat: no-repeat;
     background-image: url(../audio/son.png);
 }
+#playpausebuttonmenu{
+    padding: 0;
+    border: 0;
+    background: inherit;
+    cursor: pointer;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    margin: 20px 2.5% 20px 2.5%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(../audio/play.png);
+}
+#muteunmutebuttonmenu{
+    padding: 0;
+    border: 0;
+    background: inherit;
+    cursor: pointer;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    margin: 20px 2.5% 20px 2.5%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(../audio/son.png);
+}
 
 
 #main-menu-button{
