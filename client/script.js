@@ -2,8 +2,9 @@
 var audio = document.getElementById('playeraudio');
 var playpausebutton = document.getElementById('playpausebutton');
 var countplay=0;
-    //play , pause la musique
+
 function playpause(){
+    //play , pause la musique
     if(countplay==0){
         playpausebutton.style.backgroundImage="url(audio/pause.png)";
         audio.play();
@@ -14,11 +15,13 @@ function playpause(){
         countplay=0;
     }
 }
-    //mute , unmute la musique
+
 var countmute=0;
 var muteunmutebutton = document.getElementById('muteunmutebutton');
 function muteunmute(){
+    //mute , unmute la musique
     if(countmute==0){
+
         muteunmutebutton.style.backgroundImage="url(audio/mute.png)";
         audio.volume = 0;
         countmute=1;
@@ -28,12 +31,12 @@ function muteunmute(){
         countmute=0;
     }
 }
-    //gérer le volume
 
 var volumeslider=document.getElementById('volumeslider');
 volumeslider.addEventListener('mousemove', setvolume);
 
 function setvolume(){
+    //gère le volume de l'audio
     if(countmute==0){
         audio.volume= volumeslider.value / 1000;
     }
