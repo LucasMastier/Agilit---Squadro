@@ -312,6 +312,10 @@ button:active{
     transform: scale(0.9);
     transition: transform 0.1s;
 }
+.audiobutton:hover{
+    border: 0px solid white !important;
+    filter: drop-shadow(0 0 1rem crimson);
+}
 
 input:hover{
     filter: drop-shadow(0 0 1rem crimson);

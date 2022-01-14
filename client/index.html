@@ -54,8 +54,8 @@
         Votre navigateur ne prend pas en charge cet élement audio.
     </audio>
     <div id="audio"> 
-        <button id='playpausebuttonmenu' onclick="playpausemenu()"></button> 
-        <button id='muteunmutebuttonmenu'onclick="muteunmutemenu()"></button> 
+        <button class='audiobutton' id='playpausebuttonmenu' onclick="playpausemenu()"></button> 
+        <button class='audiobutton' id='muteunmutebuttonmenu'onclick="muteunmutemenu()"></button> 
         <input type="range" id="volumeslidermenu" min="0" max="100" value="50" step="1">
         <script>document.getElementById('playeraudiomenu').volume=50/1000</script>
     </div>
@@ -122,8 +122,8 @@
                 Votre navigateur ne prend pas en charge cet élement audio.
             </audio>
             <div id="audio"> 
-                <button id='playpausebutton' onclick="playpause()"></button> 
-                <button id='muteunmutebutton'onclick="muteunmute()"></button> 
+                <button class='audiobutton' id='playpausebutton' onclick="playpause()"></button> 
+                <button class='audiobutton' id='muteunmutebutton'onclick="muteunmute()"></button> 
                 <input type="range" id="volumeslider" min="0" max="100" value="50" step="1">
                 <script>document.getElementById('playeraudio').volume=50/1000</script>
             </div>
