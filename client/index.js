@@ -732,6 +732,8 @@ function piecePlayed(p){
 }
 
 function changeTurn(p){
+    /*  changement de tour, on bloque les pieces qui ne sont normalement pas jouables
+    */
     if(turnCounter%2==1 && p.getColor()=="yellow"){
         console.log("WaitingRed");
         turnCounter++;
@@ -785,6 +787,8 @@ function yellowPlay(){
 
 
 function initializeBoard(){
+    /*  initialise le plateau en mettant remettant les pieces a leur point de depart
+    */
     red1.reset();
     red2.reset();
     red3.reset();
