@@ -34,7 +34,7 @@ $('form').submit(function(e) {
 
 socket.on('chat-message', function (message) {
     console.log(message);
-    $('#messages').append($('<li>').text(message.text));
+    $('#messages2').append($('<li>').text(message.text));
 });
 
 // Class
