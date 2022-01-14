@@ -126,6 +126,14 @@ io.on('connection', client => {
         io.to(gameCode).emit("initGame");
         
     }
+    /**
+     * Réception de l'événement 'chat-message' et réémission vers tous les utilisateurs
+     */
+    client.on('chat-message', function (message) {
+        console.log('message : ' + message.text);
+        io.emit('chat-message', message);
+
+    });
 
 
 });
