@@ -562,19 +562,35 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
 
     /* Style audio */
 #audio{
+    display:flex;
+    flex-direction: column;
     align-items: center;
-    width: 10%;
+    width: 5%;
     padding-left: 10px;
     position:absolute; 
     bottom:0;
 }
 #audiogame{
+    display:flex;
+    flex-direction: column;
     align-items: center;
-    width: 10%;
+    width: 5%;
     padding-left: 10px;
     position:absolute; 
     bottom:0;
 }
+
+#audio-buttons-container{
+    display:flex;
+    justify-content: space-between;
+    
+}
+
+#audio-buttons-container-menu{
+    display:flex;
+    justify-content: space-between;
+}
+
 #playpausebutton{
     padding: 0;
     border: 0;
@@ -583,7 +599,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     outline: none;
     width: 25px;
     height: 25px;
-    margin: 20px 2.5% 20px 2.5%;
+    margin: 5px 2.5% 5px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url(../audio/play.png);
@@ -597,7 +613,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     outline: none;
     width: 25px;
     height: 25px;
-    margin: 20px 2.5% 20px 2.5%;
+    margin: 5px 2.5% 5px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url(../audio/son.png);
@@ -610,7 +626,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     outline: none;
     width: 25px;
     height: 25px;
-    margin: 20px 2.5% 20px 2.5%;
+    margin: 5px 2.5% 5px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url(../audio/play.png);
@@ -623,14 +639,18 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endCo
     outline: none;
     width: 25px;
     height: 25px;
-    margin: 20px 2.5% 20px 2.5%;
+    margin: 5px 2.5% 5px 2.5%;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url(../audio/son.png);
 }
 
+#volumeslider{
+    width: 70px;
+}
+
 #volumeslidermenu{
-    width: 110px;
+    width: 70px;
 }
 
 #main-menu-button{

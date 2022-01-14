@@ -164,7 +164,6 @@ function displayGame(){
     document.getElementById("playeraudiomenu").pause();
     var messageTeam = "Joueur "+playerTeam+" a rejoint la partie !"
     $('#messages2').append($('<li>').text(messageTeam));
-    socket.emit('chat-message', messageTeam);
 }
 
 function handleUnknownGame(){
