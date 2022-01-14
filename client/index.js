@@ -1,3 +1,10 @@
+// Variable globale
+var valuePositions=[0,75,192,309,426,543,620];
+var redScore=[];
+var vainqueur="";
+var yellowScore=[];
+var turnCounter;
+
 var list_game=[];
 var btn_create = document.getElementById("btn_create");
 const socket = io('http://localhost:3000');
@@ -215,6 +222,13 @@ function handleMoveRed(piece){
     incrementTurnCounter();
     console.log("Requete moveRedPieceRequest recue "+red_pieces[piece]);
     console.log(turnCounter);
+
+    if(redScore.length==4 || yellowScore.length==4){
+        if(redScore.length==4){vainqueur="ROUGES";}
+        else{vainqueur="JAUNES";}
+        gameOver();
+        turnCounter=-1;
+    }
 }
 
 function handleMoveYellow(piece){
@@ -224,6 +238,13 @@ function handleMoveYellow(piece){
     incrementTurnCounter();
     console.log("Requete moveRedPieceRequest recue "+yellow_pieces[piece]);
     console.log(turnCounter);
+
+    if(redScore.length==4 || yellowScore.length==4){
+        if(redScore.length==4){vainqueur="ROUGES";}
+        else{vainqueur="JAUNES";}
+        gameOver();
+        turnCounter=-1;
+    }
 }
 
 function incrementTurnCounter(){
@@ -451,12 +472,7 @@ function setvolume(){
 }
 
 
-// Variable globale
-var valuePositions=[0,75,192,309,426,543,620];
-var redScore=[];
-var vainqueur="";
-var yellowScore=[];
-var turnCounter;
+
 
 
 
@@ -506,6 +522,7 @@ function Yellowturn(){
 }
 
 function gameOver(){
+    console.log(vainqueur);
     /*  Indique la fin de partie */
     elementShown("entete",'Partie terminée ! Victoire des '+vainqueur);
     document.getElementById("boardfin").style.display="flex";
@@ -521,6 +538,10 @@ function gameOver(){
     yellow3.getElement().style.pointerEvents= "none";
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
+}
+
+function displayWinner(winner){
+    elementShown("entete",'Partie terminée ! Victoire des '+winner);
 }
 
 function scoreUpdate(p){
