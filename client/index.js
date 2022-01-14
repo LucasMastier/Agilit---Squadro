@@ -2,7 +2,7 @@ var list_game=[];
 var btn_create = document.getElementById("btn_create");
 const socket = io('http://localhost:3000');
 //Equipe du joueur
-let playerTeam = "rouge";
+let playerTeam;
 //Nom de la partie dans lequel le joueur est présent
 let gameCode;
 
@@ -372,6 +372,7 @@ function popupCreate(){
 function createRoom(code){
     /* creation de la partie */
     var team=document.querySelector('input[name="r"]:checked').value;
+    playerTeam = team;
     console.log(team);
     list_game.push(code);
     document.getElementById("main_menu").style.display="none";

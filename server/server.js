@@ -82,12 +82,16 @@ io.on('connection', client => {
         console.log(client.id);
         
         client.join(roomName);
-        console.log("L'hote a crée la partie "+clientRooms[client.id]);
+        console.log("L'hote a crée la partie "+code);
         client.team = team;
+
+        
+        
         
         client.emit('gameName', code);
 
         io.to(code).emit("testRoom", code);
+        console.log(client.id+" est team "+client.team);
     }
 
     function generateTurn(){
@@ -101,7 +105,7 @@ io.on('connection', client => {
         
         const nbClients = clients.size;
         console.log(clients);
-        console.log(nbClients);
+        console.log("Il y a "+nbClients+" clients dans la partie");
         
 
 
@@ -115,13 +119,32 @@ io.on('connection', client => {
             return;
         }
 
-        clientRooms[client.id] = gameCode;
-        console.log("Un joueur a rejoint la partie "+gameCode+" !");
-        client.join(gameCode);
         
 
-        io.to(gameCode).emit("testRoom", "test");
-        client.team = "jaune";
+
+        //On définit la team du joueur qui rejoint en fonction de la team du joueur deja présent
+        for (const clientId of clients ) {
+            
+            const clientSocket = io.sockets.sockets.get(clientId);
+
+            if(clientSocket.team === "rouge"){
+                console.log(clientSocket.id+" est team "+clientSocket.team);
+                client.team = "jaune";
+                console.log("Le premier joueur est rouge donc on met le deuxieme joueur jaune ")
+            } else if(clientSocket.team === "jaune"){
+                client.team = "rouge";
+            }
+       }
+       console.log(client.team);
+       
+       clientRooms[client.id] = gameCode;
+       console.log("Un joueur a rejoint la partie "+gameCode+" !");
+       client.join(gameCode);
+       
+
+       io.to(gameCode).emit("testRoom", "test");
+
+        
         client.emit('playerTeam', client.team);
         client.emit('gameName', gameCode);
         client.emit('displayGame');
