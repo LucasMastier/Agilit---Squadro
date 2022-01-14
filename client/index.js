@@ -84,7 +84,7 @@ let yellow5=new Pieces(5,0,'yellow',3);
 
 //Server
 
-socket.on('init', handleInit);
+
 socket.on('playerTeam', handlePlayerTeam);
 socket.on('unknownGame', handleUnknownGame);
 socket.on('tooManyPlayers', handleFullGame);
@@ -92,6 +92,30 @@ socket.on('testRoom', testRoom);
 socket.on('initGame', initGame);
 socket.on('displayGame', displayGame);
 socket.on('gameName', handleGameName);
+socket.on('handleTurnInit',handleTurnInit);
+socket.on('incrementTurnCounter', handleTurnCounter);
+
+function handleTurnCounter(){
+    turnCounter++;
+}
+
+function handleTurnInit(turn){
+    turnCounter = turn;
+    
+    if(turnCounter%2 == 0){
+        if(playerTeam === "jaune"){
+            waitingRed();
+        } else {
+            Redturn();
+        }
+    } else if(turnCounter %2 == 1){
+        if(playerTeam === "rouge"){
+            waitingYellow();
+        } else {
+            Yellowturn();
+        }
+    }
+}
 
 function handleGameName(code){
     //Récupère le code de la partie actuelle et la stocke dans gameCode
@@ -101,6 +125,7 @@ function handleGameName(code){
 function initGame(){
     //Permet de lancer la partie (on initialise le plateau et on lance le tour)
     game();
+    initPieces(playerTeam);
 }
 
 function testRoom(code){
@@ -113,11 +138,6 @@ function displayGame(){
     //page que l'index afin de garder la même socket)
     document.getElementById("main_menu").style.display="none";
     document.getElementById("multiplayer-game").style.display="block";
-}
-
-
-function handleInit(){
-
 }
 
 function handleUnknownGame(){
@@ -172,41 +192,64 @@ socket.on('moveYellowPieceRequest', handleMoveYellow);
 function handleMoveRed(piece){
     //Effectue la mouvement de la pièce en fonction de la requête du serveur
     piecePlayed(red_pieces[piece]);
-    
+    Yellowturn();
+    yellowPlay();
+    incrementTurnCounter();
     console.log("Requete moveRedPieceRequest recue "+red_pieces[piece]);
+    console.log(turnCounter);
 }
 
 function handleMoveYellow(piece){
     piecePlayed(yellow_pieces[piece]);
-    
+    Redturn();
+    redPlay();
+    incrementTurnCounter();
     console.log("Requete moveRedPieceRequest recue "+yellow_pieces[piece]);
+    console.log(turnCounter);
+}
+
+function incrementTurnCounter(){
+    turnCounter++;
+    socket.emit('handleIncrementTurnCounter');
 }
 
 
-//Envoi de mouvement de piece ROUGES
+//Envoi de mouvement de pièces ROUGES
 r1.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 0, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingYellow();
+    console.log(turnCounter);
  });
 
 r2.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 1, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingYellow();
+    console.log(turnCounter);
 });
 
 r3.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 2, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingYellow();
  });
 
 r4.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 3, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingYellow();
 });
 
 r5.addEventListener("click", function(){ 
     socket.emit("movePieceRed", 4, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingYellow();
  });
 
 
@@ -214,26 +257,37 @@ r5.addEventListener("click", function(){
  y1.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 0, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingRed();
+    console.log(turnCounter);
  });
 
 y2.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 1, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingRed();
 });
 
 y3.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 2, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingRed();
  });
 
 y4.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 3, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingRed();
 });
 
 y5.addEventListener("click", function(){ 
     socket.emit("movePieceYellow", 4, gameCode);
     console.log("Envoi de la requete de mouvement au serveur");
+    incrementTurnCounter();
+    waitingRed();
  });
 
 
@@ -272,7 +326,7 @@ y5.addEventListener("click", function(){
         }
     }
     animatePieces(p);
-    changeTurn(p);
+    //changeTurn(p);
     redUpdate();
     yellowUpdate();
     game();
@@ -327,22 +381,7 @@ function makeid() {
 }
 //console.log(makeid());
 function verify_code(){
-    /* Verifie le code entre par l'user si le code existe ou pas 
-    */
-   /*
-    let found=false;
-    list_game.forEach(element => {
-        if(element==document.getElementById("code").value){
-            //l'envoyer sur la partie correspondante
-            console.log(document.getElementById("code").value);
-            finded=true;
-            var code = document.getElementById("code").value;
-            socket.emit('joinRoom', code);
-        }
-    });
-    if(!found)
-        document.getElementById("erreur_code").style.visibility="visible";
-    */
+    // Verifie le code entre par l'user si le code existe ou pas 
     var code = document.getElementById("code").value;
     socket.emit('joinRoom', code);
 }
@@ -398,7 +437,7 @@ var valuePositions=[0,75,192,309,426,543,620];
 var redScore=[];
 var vainqueur="";
 var yellowScore=[];
-var turnCounter=2;
+var turnCounter;
 
 
 
@@ -429,7 +468,7 @@ function Redturn(){
     red3.getElement().style.pointerEvents= "auto";
     red4.getElement().style.pointerEvents= "auto";
     red5.getElement().style.pointerEvents= "auto";
-
+    console.log("REDTURN");
 }
 
 function Yellowturn(){
@@ -444,6 +483,7 @@ function Yellowturn(){
     yellow3.getElement().style.pointerEvents= "auto";
     yellow4.getElement().style.pointerEvents= "auto";
     yellow5.getElement().style.pointerEvents= "auto";
+    console.log("YELLOWTURN");
 }
 
 function gameOver(){
@@ -597,7 +637,7 @@ function piecePlayed(p){
         }
     }
     animatePieces(p);
-    changeTurn(p);
+    //changeTurn(p);
     redUpdate();
     yellowUpdate();
     game();
@@ -605,10 +645,12 @@ function piecePlayed(p){
 
 function changeTurn(p){
     if(turnCounter%2==1 && p.getColor()=="yellow"){
+        console.log("WaitingRed");
         turnCounter++;
         waitingRed();
     }
     if(turnCounter%2==0 && p.getColor()=="red"){
+        console.log("WaitingYellow");
         turnCounter++;
         waitingYellow();
     }
@@ -652,8 +694,9 @@ function yellowPlay(){
     movePieces(yellow5);
 }
 
+
+
 function initializeBoard(){
-    turnCounter=Math.floor(Math.random()*2);
     red1.reset();
     red2.reset();
     red3.reset();
@@ -803,14 +846,14 @@ function waiting(){
 function initPieces(team){
     /* fonction init qui interdit au joueur de touché aux autres pieces que les siennes
     */
-    if(team=="red"){
+    if(team=="rouge"){
         yellow1.getElement().style.pointerEvents= "none";
         yellow2.getElement().style.pointerEvents= "none";
         yellow3.getElement().style.pointerEvents= "none";
         yellow4.getElement().style.pointerEvents= "none";
         yellow5.getElement().style.pointerEvents= "none";
     }
-    if(team=="yellow"){
+    if(team=="jaune"){
         red1.getElement().style.pointerEvents= "none";
         red2.getElement().style.pointerEvents= "none";
         red3.getElement().style.pointerEvents= "none";
@@ -829,6 +872,7 @@ function waitingRed(){
     yellow3.getElement().style.pointerEvents= "none";
     yellow4.getElement().style.pointerEvents= "none";
     yellow5.getElement().style.pointerEvents= "none";
+    console.log("WAITINGRED");
 }
 
 function waitingYellow(){
@@ -843,6 +887,7 @@ function waitingYellow(){
     red3.getElement().style.pointerEvents= "none";
     red4.getElement().style.pointerEvents= "none";
     red5.getElement().style.pointerEvents= "none";
+    console.log("WAITINGYELLOW");
 }
 // Deroulement du jeu (main)
 function game(){
@@ -853,13 +898,18 @@ function game(){
     }
     
     console.table(tab_board); // Pour les tests a enlever plus tard
-    if(turnCounter%2==0){
+    if(turnCounter%2==0 && playerTeam === "rouge"){
+        
         Redturn();
         redPlay();
+        console.log("game redturn");
     }
-    if(turnCounter%2==1){
+    if(turnCounter%2==1 && playerTeam === "jaune"){
+        
         Yellowturn();
         yellowPlay();
+        console.log("game yellowturn");
+        
     }
 
     if(redScore.length==4 || yellowScore.length==4){
@@ -868,6 +918,30 @@ function game(){
         gameOver();
         turnCounter=-1;
     }
+}
+
+function waitingBis(playerTeam){
+    if(playerTeam == "jaune"){
+        let turn=`C'est au tour des <span id='yellow_player_title'>jaunes</span> !`;
+        elementShown("entete",turn);
+    
+        red1.getElement().style.pointerEvents= "none";
+        red2.getElement().style.pointerEvents= "none";
+        red3.getElement().style.pointerEvents= "none";
+        red4.getElement().style.pointerEvents= "none";
+        red5.getElement().style.pointerEvents= "none";
+        console.log("WAITINGYELLOW");
+    } else {
+        let turn=`C'est au tour des  <span id='red_player_title'>rouges</span> !`;
+        elementShown("entete",turn);
+        yellow1.getElement().style.pointerEvents= "none";
+        yellow2.getElement().style.pointerEvents= "none";
+        yellow3.getElement().style.pointerEvents= "none";
+        yellow4.getElement().style.pointerEvents= "none";
+        yellow5.getElement().style.pointerEvents= "none";
+        console.log("WAITINGRED");
+    }
+        
 }
 
 

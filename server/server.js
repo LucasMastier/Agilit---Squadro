@@ -37,6 +37,7 @@ io.on('connection', client => {
     //Gameplay
     client.on("movePieceRed", movePieceRed);
     client.on("movePieceYellow", movePieceYellow);
+    //client.on("handleIncrementTurnCounter", ha,dme);
 
     function movePieceRed(piece, gameCode){
         //On recupère les sockets id
@@ -84,12 +85,13 @@ io.on('connection', client => {
         console.log("L'hote a crée la partie "+clientRooms[client.id]);
         client.team = team;
         
-        
-        client.emit('playerNumber', 1);
-        client.emit('init',1);
         client.emit('gameName', code);
 
         io.to(code).emit("testRoom", code);
+    }
+
+    function generateTurn(){
+        return Math.floor(Math.random()*2);
     }
 
     function handleJoinRoom(gameCode){
@@ -116,12 +118,14 @@ io.on('connection', client => {
         clientRooms[client.id] = gameCode;
         console.log("Un joueur a rejoint la partie "+gameCode+" !");
         client.join(gameCode);
+        
 
         io.to(gameCode).emit("testRoom", "test");
         client.team = "jaune";
         client.emit('playerTeam', client.team);
         client.emit('gameName', gameCode);
         client.emit('displayGame');
+        io.to(gameCode).emit("handleTurnInit", generateTurn());
 
         io.to(gameCode).emit("initGame");
         
