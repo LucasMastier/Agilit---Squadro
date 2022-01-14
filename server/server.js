@@ -37,7 +37,13 @@ io.on('connection', client => {
     //Gameplay
     client.on("movePieceRed", movePieceRed);
     client.on("movePieceYellow", movePieceYellow);
-    //client.on("handleIncrementTurnCounter", ha,dme);
+    //Deconnexion
+    client.on('disconnect', disconnected);
+
+    function disconnected(){
+        io.to(client.code).emit("disconnected");
+    }
+        
 
     function movePieceRed(piece, gameCode){
         //On recupère les sockets id
@@ -92,6 +98,7 @@ io.on('connection', client => {
 
         io.to(code).emit("testRoom", code);
         console.log(client.id+" est team "+client.team);
+        client.code = code;
     }
 
     function generateTurn(){
@@ -157,6 +164,7 @@ io.on('connection', client => {
             io.to(gameCode).emit("handleTurnInit", generateTurn());
     
             io.to(gameCode).emit("initGame");
+            client.code = gameCode;
         }
 
         
