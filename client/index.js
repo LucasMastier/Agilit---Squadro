@@ -601,6 +601,7 @@ function movePieces(p){
                 break;
             }
             if(p.getPos()>=0 && pm>0){
+                if(!p.isOnWayback() || p.getPos()!=0)
                 if(checkCollision(p))
                     pm=2;
                 if(p.isOnWayback()){
