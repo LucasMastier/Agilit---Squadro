@@ -75,11 +75,10 @@ header{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    border: 3px solid #000;
-    background-color: rgb(255, 255, 255,0.7);
+    border: 3px solid white;
+    background-color: rgba(0, 0, 0, 0.781);
 }
 .rejouer,.return_menu{
-    background: #fff;
     display: block;
     width: 70%;
     text-align: center;
@@ -88,16 +87,21 @@ header{
     margin: 1em;
     font-size: 20px;
     cursor: pointer;
+
+    background: rgb(63,94,251);
+    background: -moz-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    background: -webkit-radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#3f5efb",endColorstr="#fc466b",GradientType=1);
+    background-size: 500px 400px;
+    backdrop-filter: blur(10px);
+    color:white;
+    outline: none;
+    border: 3px solid rgba(128,128,128,0.3);
 }
-.rejouer:hover,.return_menu:hover{
-    background: #4b4b4b;
-    transition: 0.5s;
-    color: #fff;
-}
-.rejouer:active,.return_menu:active{
-    transform: scale(0.9);
-    transition: transform 0.1s;
-}
+
+
+
 .piece{
     position: absolute;
     cursor: pointer;
@@ -302,11 +306,13 @@ header{
 
     
 button:hover{
-    border: 2px solid white !important;
-    border-radius: 10%;
+    
+    border: 3px solid white !important;
     transition: 0.2s;
     color: white;
+    
     filter: drop-shadow(0 0 1rem crimson);
+    
 }
 button:active{
     transform: scale(0.9);
