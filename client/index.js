@@ -1032,14 +1032,17 @@ function strUcFirst(a){return (a+'').charAt(0).toUpperCase()+a.substr(1);}
 $('form').submit(function(e) {
     e.preventDefault(); // On évite le recharchement de la page lors de la validation du formulaire
     // On crée notre objet JSON correspondant à notre message
-    var message = {
-        text : strUcFirst(playerTeam)+" : "+$('#m').val()
+    if(!onlySpaces($('#m').val())){
+        var message = {
+            text : strUcFirst(playerTeam)+" : "+$('#m').val()
+        }
+        $('#m').val(''); // On vide le champ texte
+        if (message.text.trim().length !== 0) { // Gestion message vide
+            socket.emit('chat-message', message);
+        }
+        $('#chat input').focus(); // Focus sur le champ du message
     }
-    $('#m').val(''); // On vide le champ texte
-    if (message.text.trim().length !== 0) { // Gestion message vide
-        socket.emit('chat-message', message);
-    }
-    $('#chat input').focus(); // Focus sur le champ du message
+    
 });
 
 socket.on('chat-message', function (message) {
@@ -1047,4 +1050,8 @@ socket.on('chat-message', function (message) {
     $('#messages2').append($('<li>').text(message.text));
 });
 
+
+function onlySpaces(str) {
+    return str.trim().length === 0;
+  }
 
