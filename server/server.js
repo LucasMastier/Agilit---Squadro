@@ -196,7 +196,7 @@ server.on('error', (err) => {
 });
 
 server.listen(serverPort, () => {
-    console.log('Server en écoute sur le port : '+serverPort);
+    console.log('Serveur en écoute sur le port : '+serverPort);
 });
 
 
