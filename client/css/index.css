@@ -191,9 +191,14 @@ button:active{
     border: 3px solid #000;
     background-color: rgba(97, 89, 89, 0.7);
 }
-#erreur_code{
-    visibility: hidden;
+.erreur_code{
     color:#B22222;
+}
+#erreur_codePleine{
+    visibility:hidden;
+}
+#erreur_codeExiste{
+    visibility:hidden;
 }
 #code{
     background: #fff;
