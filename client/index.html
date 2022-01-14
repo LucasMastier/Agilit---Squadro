@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agilité - Menu Squadro</title>
     <link rel="stylesheet" href="css/index.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -64,7 +65,7 @@
                 </div>
                 <div id="scoretext"> <span style="font-family:'Times New Roman', Times, serif">
                     Le premier joueur à faire revenir 4 pièces gagne la partie 
-                </div>
+                </span></div>
                 <div id="player1">
                     Joueur Rouge <br>
                     <span class="dot" id="red1"></span>
@@ -78,6 +79,12 @@
                     <span class="dot" id="yellow2"></span>
                     <span class="dot" id="yellow3"></span>
                     <span class="dot" id="yellow4"></span>
+                </div>
+                <div id="chatmessage2">
+                    <ul id="messages2">jik</ul>
+                    <form action="">
+                        <input id="m" autocomplete="off" /><button>Send</button>
+                    </form>
                 </div>
             </div>
             <div id="left_side">
@@ -115,6 +122,7 @@
     
         </div>
     </div>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="index.js" defer></script>
 </body>
